@@ -11,18 +11,13 @@ body {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background: url(background.png);
-    background-size:cover;
     height: 500px;
     width: 750px;
+    background: #253237;
     overflow: auto;
     border-radius: 8px;
-    box-shadow: 0 0 50px 8px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 50px 8px #5C6B73;
     padding: 10px;
-
-    display: grid;
-    grid-column-gap: 25px;
-    grid-template-columns: auto auto auto;
 }
 
 #reward-title {
@@ -32,7 +27,7 @@ body {
     letter-spacing: 0em;
     font-weight: 400;
     margin: 15px;
-    text-shadow: 0px 3px 5px rgba(255, 255, 255, 0.3);
+    text-shadow: 0px 3px 5px #5C6B73;
 }
 
 #reward-desc {
@@ -42,24 +37,27 @@ body {
     letter-spacing: 0em;
     font-weight: 400;
     margin: 7px;
-    text-shadow: 0px 3px 5px rgba(255, 255, 255, 0.3);
+    text-shadow: 0px 3px 5px #5C6B73;
 }
 
 .card {
     text-align: center;
     flex-wrap: wrap;
-    /*background: rgba(21, 22, 40, 0.4);*/
-    backdrop-filter: blur(1px);
+    background: #314349;
     border-radius: 10px;
-    border:2px solid rgba(255, 255, 255, 0.6);
+    border:2px solid #5C6B73;
     padding-top: 0;
     padding-bottom: 5px;
-    margin-top: 25px;
+    margin-bottom: 10px; 
     transition: all 0.1s linear 0s;
 }
 
+.card:hover {
+    transform: scale(1.01, 1.01);
+}
+
 .button {
-    background: rgba(21, 22, 40, 0.4);
+    background: #314349;
     font-family: Arial;
     color: #E0FBFC;
     font-size: 16px;
@@ -67,15 +65,15 @@ body {
     font-weight: 400;
     padding: 2px 10px;
     border: none;
-    box-shadow: 0px 1px 2px 0px rgba(21, 22, 40, 1.0), 0px -1px 0px 0px rgba(21, 22, 40, 1.0), 0px 0px 0px 5px rgba(255, 255, 255, 0.3);
+    box-shadow: 0px 1px 2px 0px #778992, 0px -1px 0px 0px #778992, 0px 0px 0px 5px #5C6B73;
     transition: all 0.25s linear 0s;
     margin-bottom: 5px;
 }
 
 .button:hover {
-    background: rgba(15, 25, 80, 0.4);
+    background: #314349;
     color: #E0FBFC;
-    box-shadow: 0px 1px 2px 0px rgba(21, 22, 40, 1.0), 0px -1px 0px 0px rgba(21, 22, 40, 1.0), 0px 0px 0px 5px #E0FBFC;
+    box-shadow: 0px 1px 2px 0px #778992, 0px -1px 0px 0px #778992, 0px 0px 0px 5px #E0FBFC;
     transition: all 0.25s linear 0s;
 }
 
@@ -85,7 +83,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
+    background: #5C6B73;
     border-radius: 10px;
 }
     
@@ -101,10 +99,6 @@ body {
 
 #claimable {
     color: #cbdfbd;
-}
-
-.indicator {
-    position: absolute;
 }
 
 #exit-button {

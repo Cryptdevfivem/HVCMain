@@ -76,6 +76,7 @@ function CheckRewards(player, playerData, position, uniqueID)
             else
                 for _uniqueID in string.gmatch(playerData.rewardsReceived, '([^,]+)') do
                     if _uniqueID == uniqueID then 
+                        print(_uniqueID.." already")
                         cancel = true
                     end
                 end
@@ -83,7 +84,7 @@ function CheckRewards(player, playerData, position, uniqueID)
 
             if not cancel then
                 if tostring(position) ~= "notjson" then
-                    TriggerClientEvent("ccrwds:sendNotification", player, "Claimed: ~y~"..Rewards[i].Label)
+                    -- TriggerClientEvent("ccrwds:sendNotification", player, "You claimed ~y~"..Rewards[i].Label)
                     if position ~= -1 then
                         local rRewards = playerData.rewardsReceived
                         rRewards[#rRewards + 1] = uniqueID
@@ -101,7 +102,7 @@ function CheckRewards(player, playerData, position, uniqueID)
                     end
                     TriggerClientEvent("ccrwds:reward", player, Rewards[i].Function, SecurisationKey)
                 else
-                    TriggerClientEvent("ccrwds:sendNotification", player, "Claimed: ~y~"..Rewards[i].Label)
+                    -- TriggerClientEvent("ccrwds:sendNotification", player, "You claimed ~y~"..Rewards[i].Label)
                     local rRewards = playerData.rewardsReceived
                     if playerData.rewardsReceived == "" then
                         rRewards = uniqueID
@@ -114,7 +115,7 @@ function CheckRewards(player, playerData, position, uniqueID)
                     TriggerClientEvent("ccrwds:reward", player, Rewards[i].Function, SecurisationKey)
                 end
             else
-                TriggerClientEvent("ccrwds:sendNotification", player, "Already Claimed: ~y~"..Rewards[i].Label)
+                TriggerClientEvent("ccrwds:sendNotification", player, "You have already claimed ~y~"..Rewards[i].Label)
             end
         end
     end

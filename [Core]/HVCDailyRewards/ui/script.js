@@ -47,10 +47,8 @@ $(document).ready(function(){
 
             var totalDays = document.createElement('p');
             document.getElementById("container").appendChild(totalDays);
-
             totalDays.textContent = "→ " + currentDays + " days in a row.";
             totalDays.id = "reward-desc";
-            totalDays.className = "indicator";
 
             for (let i = 0; i < data.rwds.length; i++) 
             {

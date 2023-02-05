@@ -71,7 +71,7 @@ end)
 local antispamTimer = 0
 local uiDisplayState = false
 --TriggerServerEvent("scrwds:checkForReward")
-RegisterCommand("advent", function() 
+RegisterCommand("rewards", function() 
     if GetGameTimer() - antispamTimer > 2500 then
         TriggerServerEvent("scrwds:dataCheck")
         uiDisplayState = not uiDisplayState
