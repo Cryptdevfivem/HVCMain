@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'Azonix Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Azonix Regular'), url('Azonix.woff') format('woff');
+}
