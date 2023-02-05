@@ -73,7 +73,7 @@ setInterval(function () {
                 "inline": true
             },
         ],
-        "description": "**How do I connect to the server?**\n`F8 ==> connect s1.hvc.city`",
+        "description": "**How do I connect to the server?**\n`F8 ==> connect HVC5M.city`",
         "title": "HVC Status"
     }
     client.channels.cache.get('900073282273959936').fetch('960264682134974544').then(messages => {
