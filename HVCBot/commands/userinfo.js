@@ -16,7 +16,7 @@ exports.runcmd = async(fivemexports, client, message, params) => {
     let time = "";
     let date = "";
 
-    fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_user_ids` WHERE user_id = ?", [params[0]], (discordid) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_user_ids` WHERE user_id = ?", [params[0]], (discordid) => {
         if (discordid.length > 0) {
             for (i = 0; i < discordid.length; i++) {
                 if (discordid[i].identifier.includes('discord')) {
@@ -24,11 +24,11 @@ exports.runcmd = async(fivemexports, client, message, params) => {
                 }
             }
         }
-        fivemexports.ghmattimysql.execute("SELECT * FROM vrp_user_moneys WHERE user_id = ?", [params[0]], (result) => {
+        fivemexports.ghmattimysql.execute("SELECT * FROM hvc_user_moneys WHERE user_id = ?", [params[0]], (result) => {
             if (result) {
                 bank = result[0].bank
                 wallet = result[0].wallet
-                fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_users` WHERE id = ?", [params[0]], (userdata) => {
+                fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_users` WHERE id = ?", [params[0]], (userdata) => {
                     if (userdata) {
                         if (userdata[0].banned == 1) {
                             if (userdata[0].bantime == "perm"){
@@ -38,7 +38,7 @@ exports.runcmd = async(fivemexports, client, message, params) => {
                                 bandata = `Banned: True\n\nReason(s): ${userdata[0].banreason}\n\nAdmin: ${userdata[0].banadmin}\n\nBan Expires: ${new Date(userdata[0].bantime * 1000)}`
                             }
                         }
-                        fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_user_data` WHERE user_id = ?", [params[0]], (result) => {
+                        fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_user_data` WHERE user_id = ?", [params[0]], (result) => {
                             if (result.length > 0) {
                                 obj = JSON.parse(result[0].dvalue).groups
                                 groups = (JSON.stringify(Object.keys(obj)).replace(/"/g, '').replace('[', '').replace(']', '')).replace(/,/g, ', ')
@@ -47,7 +47,7 @@ exports.runcmd = async(fivemexports, client, message, params) => {
                                     povlisttrue = '**User is on POV List.**'
                                 }
                             } 
-                        fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_users` WHERE id = ?", [params[0]], (result) => {
+                        fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_users` WHERE id = ?", [params[0]], (result) => {
                             if (result) {
                                 lastlogin = result[0].last_login.split(" ")
                                 time = lastlogin[0]

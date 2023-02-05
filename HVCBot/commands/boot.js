@@ -7,7 +7,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0]) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'boot [permid] [spawncode]')
     }
-    fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_srv_data` WHERE dkey = ?", [`chest:u1veh_${params[1]}|${params[0]}`], (result) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_srv_data` WHERE dkey = ?", [`chest:u1veh_${params[1]}|${params[0]}`], (result) => {
         if (result.length > 0) {
             obj = JSON.parse(result[0].dvalue)
             let embed = {

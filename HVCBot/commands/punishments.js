@@ -10,9 +10,9 @@ let totalWarns = 0
 
 exports.runcmd = (fivemexports, client, message, params) => {
     message.delete()
-    fivemexports.ghmattimysql.execute("SELECT * FROM vrp_users WHERE banned = 1", (bannedPlayers) => {
-    fivemexports.ghmattimysql.execute("SELECT * FROM vrp_warnings WHERE warning_type = 'Ban'", (totalBans) => {
-    fivemexports.ghmattimysql.execute("SELECT * FROM vrp_warnings WHERE warning_type = 'Kick'", (totalKicks) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM hvc_users WHERE banned = 1", (bannedPlayers) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM hvc_warnings WHERE warning_type = 'Ban'", (totalBans) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM hvc_warnings WHERE warning_type = 'Kick'", (totalKicks) => {
     let embed = {
         "title": "Punishment Statistics",
         "description": `**Banned Players:** ${bannedPlayers.length}\n**Total Bans:** ${totalBans.length}\n**Total Kicks:** ${totalKicks.length}\n**Total Punishments:** ${totalBans.length+totalKicks.length}\n\n**Admin:** <@${message.author.id}>`,

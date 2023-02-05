@@ -7,14 +7,14 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0] || !parseInt(params[0]) || !params[1]) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'addmoney [permid] [amount]')
     }
-    fivemexports.ghmattimysql.execute("SELECT * FROM vrp_user_moneys WHERE user_id = ?", [params[0]], (result) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM hvc_user_moneys WHERE user_id = ?", [params[0]], (result) => {
         if (result) {
             bank = result[0].bank
             wallet = result[0].wallet
             newmoney = bank+parseInt(params[1])
         }
             fivemexports.vrp.vrpbot('getUserSource', [parseInt(params[0])], function(d) {
-                fivemexports.ghmattimysql.execute("UPDATE `vrp_user_moneys` SET bank = ? WHERE user_id = ?", [parseInt(newmoney), params[0]], (result) => {
+                fivemexports.ghmattimysql.execute("UPDATE `hvc_user_moneys` SET bank = ? WHERE user_id = ?", [parseInt(newmoney), params[0]], (result) => {
                     if (result) {
                         let embed = {
                             "title": "Added Money",

@@ -7,7 +7,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0] || !parseInt(params[0])) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'clearf10 [perm id]')
     }
-    fivemexports['ghmattimysql'].execute("DELETE FROM vrp_warnings WHERE user_id = ?", [parseInt(params[0])])
+    fivemexports['ghmattimysql'].execute("DELETE FROM hvc_warnings WHERE user_id = ?", [parseInt(params[0])])
     let embed = {
         "title": "Cleared Warnings",
         "description": `\nPerm ID: **${params[0]}**\n\nAdmin: <@${message.author.id}>`,

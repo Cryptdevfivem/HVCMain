@@ -7,7 +7,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0] || !parseInt(params[0]) || !params[1]) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'addcar [permid] [spawn code]')
     }
-    fivemexports.ghmattimysql.execute("INSERT INTO vrp_user_vehicles (user_id, vehicle) VALUES(?, ?)", [params[0], params[1]], (result) => {
+    fivemexports.ghmattimysql.execute("INSERT INTO hvc_user_vehicles (user_id, vehicle) VALUES(?, ?)", [params[0], params[1]], (result) => {
         if (result) {
             let embed = {
                 "title": "Added Car",

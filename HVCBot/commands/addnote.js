@@ -11,13 +11,13 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0]) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'addnote [permid] [text]')
     }
-    fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_user_ids` WHERE identifier = ?", ["discord:" + message.author.id], (result) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_user_ids` WHERE identifier = ?", ["discord:" + message.author.id], (result) => {
         if (result.length > 0) {
             adminpermid = result[0].user_id
-            fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_users` WHERE id = ?", [adminpermid], (result) => {
+            fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_users` WHERE id = ?", [adminpermid], (result) => {
                 if (result) {
                     adminname = result[0].username
-                    fivemexports.ghmattimysql.execute("INSERT INTO `vrp_user_notes` (user_id, text, admin_name, admin_id) VALUES(?,?,?,?) ", [params[0], [params.join(' ').replace(params[0], '')], adminname, adminpermid], (result) => {
+                    fivemexports.ghmattimysql.execute("INSERT INTO `hvc_user_notes` (user_id, text, admin_name, admin_id) VALUES(?,?,?,?) ", [params[0], [params.join(' ').replace(params[0], '')], adminname, adminpermid], (result) => {
                         if (result) {
                             let embed = {
                                 "title": "Added Note",

@@ -5,7 +5,7 @@ const settingsjson = require(resourcePath + '/settings.js')
 exports.runcmd = (fivemexports, client, message, params) => {
     message.delete()
     if (params[0] && parseInt(params[0])) {
-        fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_user_ids` WHERE user_id = ?", [params[0]], (result) => {
+        fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_user_ids` WHERE user_id = ?", [params[0]], (result) => {
             if (result.length > 0) {
                 for (i = 0; i < result.length; i++) {
                     if (result[i].identifier.includes('discord')) {

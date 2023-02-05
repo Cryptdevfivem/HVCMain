@@ -18,7 +18,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
         .addField('Issue', `${params.join(' ').replace(params[0], '')}`)
         .addField('From', `${message.author.username} - <@${message.author.id}>`)
         .setColor('#ffcece')
-        .setFooter('🌊 Aqua Roleplay')
+        .setFooter('🌊 HVC Roleplay')
         .setTimestamp();
     
         hook.send(embed);

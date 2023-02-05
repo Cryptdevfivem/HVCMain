@@ -32,7 +32,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
         endsat = params[2]
         maxSpeed = params[3]
         carName = `${params.join(' ').replace(params[0], '').replace(params[1], '').replace(params[2], '').replace(params[3], '')}`
-        fivemexports.ghmattimysql.execute("SELECT * FROM vrp_user_vehicles WHERE vehicle = ?", [params[0].toLowerCase()], (result) => {
+        fivemexports.ghmattimysql.execute("SELECT * FROM hvc_user_vehicles WHERE vehicle = ?", [params[0].toLowerCase()], (result) => {
             if (result) {
                 carcount = result.length
                 message.guild.createChannel(`auction-${spawncode}`, 'text')

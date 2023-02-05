@@ -4,7 +4,7 @@ const settingsjson = require(resourcePath + '/settings.js')
 
 exports.runcmd = (fivemexports, client, message, params) => {
     message.delete()
-    fivemexports.ghmattimysql.execute("SELECT * FROM vrp_users WHERE banned = 1", (result) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM hvc_users WHERE banned = 1", (result) => {
         if (result) {
             for (i = 0; i < result.length; i++) { 
                 let newval = fivemexports.vrp.vrpbot('setBanned', [parseInt(result[i].id), false])

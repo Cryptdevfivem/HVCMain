@@ -7,7 +7,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0]) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'ch [permid]')
     }
-    fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_user_data` WHERE user_id = ?", [params[0]], (result) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_user_data` WHERE user_id = ?", [params[0]], (result) => {
         if (result.length > 0) {
             hours = JSON.stringify(JSON.parse(result[0].dvalue).PlayerTime/60)
             let embed = {

@@ -7,7 +7,7 @@ exports.settings = {
     Level6Perm: "| Developer",
     ip: "hvc.co.uk", // ip of the server or domain!
     StatusEnabled: true, // Whether the status is enabled be sure to fill out the bottom too!
-    GuildID: "1061262187584290847", // Guild ID 
+    GuildID: "1071225849455579206", // Guild ID 
     StatusChannel: "・status", // The status channel, 
     botColour: 0xff0000, // Global embed colour, 
     minBid: 100000, // Minimum bid amount, 

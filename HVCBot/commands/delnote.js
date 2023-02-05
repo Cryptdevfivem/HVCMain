@@ -8,7 +8,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0]) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'delnote [note-id]')
     }
-    fivemexports.ghmattimysql.execute("DELETE FROM `vrp_user_notes` WHERE note_id = ?", [params[0]], (result) => {
+    fivemexports.ghmattimysql.execute("DELETE FROM `hvc_user_notes` WHERE note_id = ?", [params[0]], (result) => {
         if (result) {
             let embed = {
                 "title": "Deleted Note",

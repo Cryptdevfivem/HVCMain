@@ -7,12 +7,12 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0] || !parseInt(params[0]) || !params[1]) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'delgroup [permid] [group name]')
     }
-    fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_user_data` WHERE user_id = ?", [params[0]], (result) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_user_data` WHERE user_id = ?", [params[0]], (result) => {
         if (result.length > 0) {
             let dvalue = JSON.parse(result[0].dvalue)
             let groups = dvalue.groups
             groups[params[1]] = undefined;
-            fivemexports.ghmattimysql.execute("UPDATE `vrp_user_data` SET dvalue = ? WHERE user_id = ?", [JSON.stringify(dvalue), params[0]])
+            fivemexports.ghmattimysql.execute("UPDATE `hvc_user_data` SET dvalue = ? WHERE user_id = ?", [JSON.stringify(dvalue), params[0]])
         }
     })
     let embed = {

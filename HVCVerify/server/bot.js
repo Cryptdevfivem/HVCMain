@@ -39,7 +39,7 @@ client.on("message", async message => {
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
-    const guild = client.guilds.cache.get(`850072410127597608`);
+    const guild = client.guilds.cache.get(`1071225849455579206`);
     if (! guild) return console.error("404: guild with ID", guildID, "not found");
 
 
@@ -77,10 +77,10 @@ client.on("message", async message => {
                 message.channel.send(embed).then(message => {
                     message.delete({ timeout: 5 * 1000 });
                 });
-                member.roles.add("891348409276047401").then().catch(console.error);
+                member.roles.add("1071228838631178251").then().catch(console.error);
             }
         });
     }
 });
 
-client.login("YOURTOKENHERE");
+client.login("MTA3MTIyOTc3MjEzMjI2NjAxNA.GcbV6E.o3wkvv5awFe4wze7w94R3BvvzWJPnek_QDP7zI");

@@ -6,7 +6,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     message.delete()
     if (message.mentions.members.first()) {
         let user = message.mentions.members.first()
-        fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_user_ids` WHERE identifier = ?", ["discord:" + user.id], (result) => {
+        fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_user_ids` WHERE identifier = ?", ["discord:" + user.id], (result) => {
             if (result.length > 0) {
                 let embed = {
                     "title": "Discord to Perm ID",

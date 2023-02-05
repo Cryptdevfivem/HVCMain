@@ -7,7 +7,7 @@ const settingsjson = require(resourcePath + '/settings.js')
 
 exports.runcmd = (fivemexports, client, message, params) => {
     message.delete()
-    fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_user_vehicles` WHERE user_id = ?", [params[0]], (result) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_user_vehicles` WHERE user_id = ?", [params[0]], (result) => {
         var table = new AsciiTable(`ID ${[params[0]]}'s garage`)
         table.setHeading('Vehicle', 'Rented', 'Locked')
         for (i = 0; i < result.length; i++) {

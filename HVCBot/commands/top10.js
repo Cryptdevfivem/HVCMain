@@ -5,7 +5,7 @@ const settingsjson = require(resourcePath + '/settings.js')
 
 exports.runcmd = (fivemexports, client, message, params) => {
     message.delete()
-    fivemexports.ghmattimysql.execute("SELECT * FROM vrp_user_moneys ORDER BY bank DESC", [], (result) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM hvc_user_moneys ORDER BY bank DESC", [], (result) => {
         if (result) {
             var table = new AsciiTable('Top 10 Richest')
             table.setHeading('UserID', 'Amount')

@@ -7,7 +7,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0]) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'hmc [spawn code]')
     }
-    fivemexports.ghmattimysql.execute("SELECT * FROM vrp_user_vehicles WHERE vehicle = ?", [params[0].toLowerCase()], (result) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM hvc_user_vehicles WHERE vehicle = ?", [params[0].toLowerCase()], (result) => {
         if (result) {
             let embed = {
                 "title": "Car Count",

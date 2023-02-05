@@ -11,7 +11,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0]) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'delcardb [spawncode]')
     }
-    fivemexports.ghmattimysql.execute("DELETE FROM `vrp_user_vehicles` WHERE vehicle = ?", [params[0]])
+    fivemexports.ghmattimysql.execute("DELETE FROM `hvc_user_vehicles` WHERE vehicle = ?", [params[0]])
     let embed = {
         "title": `Database Update`,
         "description": `${params[0]} has been deleted from the database.`,

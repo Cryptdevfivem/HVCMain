@@ -37,28 +37,28 @@ if (settingsjson.settings.StatusEnabled) {
         totalSeconds %= 3600;
         let minutes = Math.floor(totalSeconds / 60);
         client.user.setActivity(`${GetNumPlayerIndices()}/${GetConvarInt("sv_maxclients",60)} players`, { type: 'WATCHING' });
-        exports.ghmattimysql.execute("SELECT * FROM `vrp_user_moneys`", (result) => {
+        exports.ghmattimysql.execute("SELECT * FROM `hvc_user_moneys`", (result) => {
             playersSinceRelease = result.length
         });
-        exports.vrp.vrpbot('getUsersByPermission', ['police.armoury'], function(result) {
+        exports.hvc.hvcbot('getUsersByPermission', ['police.armoury'], function(result) {
             if (!result.length)
                 onlinePD = 0
             else
                 onlinePD = result.length
         })
-        exports.vrp.vrpbot('getUsersByPermission', ['admin.tickets'], function(result) {
+        exports.hvc.hvcbot('getUsersByPermission', ['admin.tickets'], function(result) {
             if (!result.length)
                 onlineStaff = 0
             else
                 onlineStaff = result.length
         })
-        exports.vrp.vrpbot('getUsersByPermission', ['nhs permission here'], function(result) {
+        exports.hvc.hvcbot('getUsersByPermission', ['nhs permission here'], function(result) {
             if (!result.length)
                 onlineNHS = 0
             else
                 onlineNHS = result.length
         })
-        exports.ghmattimysql.execute("SELECT * FROM vrp_users WHERE banned = 1", (result) => {
+        exports.ghmattimysql.execute("SELECT * FROM hvc_users WHERE banned = 1", (result) => {
             bannedPlayers = result.length
         })
         channelid.fetchMessage(settingsjsons.messageid).then(msg => {
@@ -95,13 +95,13 @@ if (settingsjson.settings.StatusEnabled) {
                     },
                     {
                         "name": "💻 How do I connect?",
-                        "value": '``F8 -> AquaRP.co.uk``',
+                        "value": '``F8 -> HVCRP.co.uk``',
                         "inline": true
                     }
                 ],
                 "title": "Status",
                 "footer": {
-                    "text": "🌊 Aqua Roleplay"
+                    "text": "🌊 HVC Roleplay"
                 },
                 "timestamp": new Date()
             }
@@ -218,7 +218,7 @@ client.on('message', (message) => {
             } catch (err) {
                 let embed = {
                     "title": "Error Occured!",
-                    "description": "\nAn error occured. Contact vRP with the code:\n\n```" + err.message + "\n```",
+                    "description": "\nAn error occured. Contact hvc with the code:\n\n```" + err.message + "\n```",
                     "color": 13632027
                 }
                 message.channel.send({ embed })

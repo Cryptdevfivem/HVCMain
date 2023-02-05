@@ -9,7 +9,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     }
     fivemexports.vrp.vrpbot('getUserSource', [parseInt(params[0])], function(d) {
         let newval = fivemexports.vrp.vrpbot('kick', [d, `${message.author.username} is adding tokens to your account.`])
-        fivemexports.ghmattimysql.execute("UPDATE `vrp_user_moneys` SET bank = ? WHERE user_id = ?", [params[1], params[0]], (result) => {
+        fivemexports.ghmattimysql.execute("UPDATE `hvc_user_moneys` SET bank = ? WHERE user_id = ?", [params[1], params[0]], (result) => {
             if (result) {
                 let embed = {
                     "title": "Set Money",

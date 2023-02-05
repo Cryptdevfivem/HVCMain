@@ -7,10 +7,10 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0] || !params[1] || !parseInt(params[1])) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'ban [permid] [time (hours)] [reason]')
     }
-    fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_user_ids` WHERE identifier = ?", ["discord:" + message.author.id], (result) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_user_ids` WHERE identifier = ?", ["discord:" + message.author.id], (result) => {
         if (result.length > 0) {
             adminpermid = result[0].user_id
-            fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_users` WHERE id = ?", [adminpermid], (result) => {
+            fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_users` WHERE id = ?", [adminpermid], (result) => {
                 if (result) {
                     adminname = result[0].username
                     const reason = params.slice(2).join(' ');

@@ -10,7 +10,7 @@ let descriptionText = ''
 
 exports.runcmd = (fivemexports, client, message, params) => {
     message.delete()
-    fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_user_vehicles` WHERE vehicle = ?", [params[0]], (result) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_user_vehicles` WHERE vehicle = ?", [params[0]], (result) => {
         var owners = []
         for (i = 0; i < result.length; i++) {              
             owners.push(`(${result[i].user_id})\n`)

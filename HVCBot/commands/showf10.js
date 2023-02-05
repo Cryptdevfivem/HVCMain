@@ -10,7 +10,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0] || !parseInt(params[0])) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'showf10 [permid]')
     }
-    fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_warnings` WHERE user_id = ?", [params[0]], (result) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_warnings` WHERE user_id = ?", [params[0]], (result) => {
         var table = new AsciiTable(`F10 Warnings for Perm ID ${[params[0]]}`)
         table.setHeading('Warning ID', 'Warning Type', 'Duration', 'Reason', 'Admin', 'Date')
         for (i = 0; i < result.length; i++) {

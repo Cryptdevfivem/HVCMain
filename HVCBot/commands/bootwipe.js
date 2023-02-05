@@ -7,7 +7,7 @@ let bootsCleared = 0
 
 exports.runcmd = (fivemexports, client, message, params) => {
     message.delete()
-    fivemexports.ghmattimysql.execute("SELECT * FROM vrp_srv_data", (result) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM hvc_srv_data", (result) => {
         bootsCleared = result.length
         let embed = {
             "title": "Bootwipe Complete",
@@ -20,7 +20,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
         }
         message.channel.send({ embed })
     })
-    fivemexports.ghmattimysql.execute("DELETE FROM vrp_srv_data") 
+    fivemexports.ghmattimysql.execute("DELETE FROM hvc_srv_data") 
 }
 
 exports.conf = {

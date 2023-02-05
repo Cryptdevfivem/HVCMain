@@ -312,6 +312,14 @@ function HVC.getPlayerName(player)
 end
 
 --- sql
+-- This can only be used server side and is for the vRP bot. 
+exports("hvcbot", function(method_name, params, cb)
+    if cb then 
+        cb(hvc[method_name](table.unpack(params)))
+    else 
+        return HVC[method_name](table.unpack(params))
+    end
+end)
 
 function HVC.ReLoadChar(source)
     local name = GetPlayerName(source)
