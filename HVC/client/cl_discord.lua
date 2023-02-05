@@ -10,7 +10,7 @@ AddEventHandler('discord:getpermid2', function(UserID)
     SetDiscordRichPresenceAssetText('HVC')
     SetDiscordRichPresenceAssetSmallText('[EU|UK] HVC Server #1')
     SetDiscordRichPresenceAction(0, "Join Discord", "https://discord.gg/hvc5m")
-    SetDiscordRichPresenceAction(1, "Connect To HVC", "fivem://connect/s1.hvc.city")
+    SetDiscordRichPresenceAction(1, "Connect To HVC", "fivem://connect/217.182.42.165")
     SetRichPresence("PermID: "..UserID.." - Updating")
 end)
 
