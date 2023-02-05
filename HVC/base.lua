@@ -27,7 +27,7 @@ local verify_card = {
             ["items"] = {
                 {
                     ["type"] = "TextBlock",
-                    ["text"] = "1. Join the HVC discord (discord.gg/hvc)",
+                    ["text"] = "1. Join the HVC discord (discord.gg/hvc5m)",
                     ["wrap"] = true,
                 },
                 {
