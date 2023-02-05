@@ -27,7 +27,7 @@ local verify_card = {
             ["items"] = {
                 {
                     ["type"] = "TextBlock",
-                    ["text"] = "1. Join the HVC discord (discord.gg/hvc)",
+                    ["text"] = "1. Join the HVC discord (discord.gg/hvc5m)",
                     ["wrap"] = true,
                 },
                 {
@@ -312,6 +312,14 @@ function HVC.getPlayerName(player)
 end
 
 --- sql
+-- This can only be used server side and is for the vRP bot. 
+exports("HVCbot", function(method_name, params, cb)
+    if cb then 
+        cb(HVC[method_name](table.unpack(params)))
+    else 
+        return HVC[method_name](table.unpack(params))
+    end
+end)
 
 function HVC.ReLoadChar(source)
     local name = GetPlayerName(source)
