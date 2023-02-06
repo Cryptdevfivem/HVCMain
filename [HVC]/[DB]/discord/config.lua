@@ -49,5 +49,5 @@ cfgdiscordperm.Splash = {
 	Header_IMG = 'https://cdn.discordapp.com/attachments/972592560960831608/986030964935360512/hvc.png',
 	Enabled = false,
 	Wait = 10,
-	Discord_Link = 'https://discord.gg/hvc',
+	Discord_Link = 'https://discord.gg/hvc5m',
 }
