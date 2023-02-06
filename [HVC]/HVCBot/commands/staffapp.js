@@ -5,8 +5,8 @@ const settingsjson = require(resourcePath + '/settings.js')
 exports.runcmd = (fivemexports, client, message, params) => {
     message.delete()
     let embed = {
-        "title": "Staff Applications",
-        "description": `link to staff app form`,
+        "title": "Wanting to apply for HVC staff? Follow the link below 👇",
+        "description": `https://forms.gle/hSQ8WR8bpGCVAvLv8`,
         "color": settingsjson.settings.botColour,
         "footer": {
             "text": ""
