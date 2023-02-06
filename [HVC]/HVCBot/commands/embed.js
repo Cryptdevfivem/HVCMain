@@ -13,7 +13,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
             "description": `${params.join(' ').replace(params[0], '')}`,
             "color": settingsjson.settings.botColour,
             "footer": {
-                "text": "🌊 hvc Roleplay"
+                "text": "HVC Management"
             },
             "timestamp": new Date()
         }
