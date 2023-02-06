@@ -97,8 +97,8 @@ cfg.garage_types = {
   
   ["VIP Vehicles"] = {
     _config = {vtype="Car",blipid=50,blipcolor=5,permissions={"vip.garage"}},
-	--Baller Locks
-
+  --Founder Locks
+  ["foid"] = {"Foid RS3",999999999999999, ""},
   --Management Locks
   ["urusvennum"] = {"Urus Vennum Founder Lock",999999999999999, ""},
   ["tonkat"] = {"Toyota Tonka",999999999999999, ""},
@@ -616,10 +616,11 @@ cfg.garage_types = {
   ["VIP Garages"] = {
   _config = {vtype="VIPCar",blipid=50,blipcolor=5,permissions={"vip.garage"}},
 
-
-
   --Founder Locks
   ["foid"] = {"Foid RS3",999999999999999, ""},
+
+
+
 
 
 

@@ -97,12 +97,8 @@ cfg.garage_types = {
   
   ["VIP Vehicles"] = {
     _config = {vtype="Car",blipid=50,blipcolor=5,permissions={"vip.garage"}},
-
-	--Founder Locks    
-    ["foid"] = {"Foid RS3",999999999999999, ""},
-    ["urusvennum"] = {"Urus Vennum Founder Lock",999999999999999, ""},
-	--Baller Locks
-
+  --Founder Locks
+  ["foid"] = {"Foid RS3",999999999999999, ""},
   --Management Locks
   ["urusvennum"] = {"Urus Vennum Founder Lock",999999999999999, ""},
   ["tonkat"] = {"Toyota Tonka",999999999999999, ""},
@@ -616,8 +612,17 @@ cfg.garage_types = {
 
   },
 
+
   ["VIP Garages"] = {
   _config = {vtype="VIPCar",blipid=50,blipcolor=5,permissions={"vip.garage"}},
+
+  --Founder Locks
+  ["foid"] = {"Foid RS3",999999999999999, ""},
+
+
+
+
+
 
   --Management Locks
   ["urusvennum"] = {"Urus Vennum Founder Lock",999999999999999, ""},
@@ -632,7 +637,6 @@ cfg.garage_types = {
   ["m4rainbow"] = {"BMW M4 Rainbow",999999999999999, ""},
   ["rasrover"] = {"Range Rover Mansory SVR",999999999999999, ""},
   ["AUDITT15"] = {"Audi TT15 Cup",999999999999999, ""},
-
 
 	--Custom Vehicles
 	["mlbrabus"] = {"Mercedes-Benz ML Brabus 2009",999999999999, ""},
