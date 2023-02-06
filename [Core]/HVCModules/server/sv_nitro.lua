@@ -37,7 +37,7 @@ AddEventHandler("CheckNitro", function()
     if id == "" or id == nil then
         return TriggerClientEvent("HVC:DisplayImageNotify", source, "Discord Nitro", "~r~It seems you don't have discord running or installed try restart fivem")
     end
-    exports["discordroles"]:isRolePresent(source, {'884636847286927412'} --[[ can be a table or just a string. ]], function(hasRole)
+    exports["discordroles"]:isRolePresent(source, {'1071245159037141003'} --[[ can be a table or just a string. ]], function(hasRole)
         if hasRole == true then
             local Ped = GetPlayerPed(source)
             local Model = GetHashKey("bmx")
