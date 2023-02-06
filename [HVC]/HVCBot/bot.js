@@ -101,7 +101,7 @@ if (settingsjson.settings.StatusEnabled) {
                 ],
                 "title": "Status",
                 "footer": {
-                    "text": "hvc"
+                    "text": "HVC"
                 },
                 "timestamp": new Date()
             }
