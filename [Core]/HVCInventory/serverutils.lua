@@ -1,8 +1,8 @@
 local modules = {}
 function module(rsc, path) -- load a LUA resource file as module
-    if path == nil then -- shortcut for HVC, can omit the resource parameter
+    if path == nil then -- shortcut for vrp, can omit the resource parameter
         path = rsc
-        rsc = "hvc"
+        rsc = "vrp"
     end
     local key = rsc .. path
 
@@ -18,10 +18,10 @@ function module(rsc, path) -- load a LUA resource file as module
                 return table.unpack(ar)
             else
                 modules[key] = nil
-                print("[HVC] error loading module " .. rsc .. "/" .. path .. ":" .. ar[2])
+                print("[vRP] error loading module " .. rsc .. "/" .. path .. ":" .. ar[2])
             end
         else
-            print("[HVC] error parsing module " .. rsc .. "/" .. path .. ":" .. err)
+            print("[vRP] error parsing module " .. rsc .. "/" .. path .. ":" .. err)
         end
     end
 end
