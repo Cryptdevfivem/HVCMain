@@ -5,8 +5,8 @@ const settingsjson = require(resourcePath + '/settings.js')
 exports.runcmd = (fivemexports, client, message, params) => {
     message.delete()
     let embed = {
-        "title": "Police Discord",
-        "description": `https://discord.gg/yTvzFgfT`,
+        "title": "National Health Service Discord",
+        "description": `https://discord.gg/7TtpbgBH`,
         "color": settingsjson.settings.botColour,
         "footer": {
             "text": ""
@@ -17,6 +17,6 @@ exports.runcmd = (fivemexports, client, message, params) => {
 }
 
 exports.conf = {
-    name: "pdcord",
+    name: "nhscord",
     perm: 0
 }
