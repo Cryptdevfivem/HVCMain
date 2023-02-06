@@ -286,7 +286,7 @@ end)
 AddEventHandler('HVC:StoreWeaponsRequest', function(source)
     local player = source 
     local user_id = HVC.getUserId(player)
-	HVCclient.getWeapons(player,{},function(weapons)
+    HVCclient.getWeapons(player,{},function(weapons)
         if not isStoring[player] then
             isStoring[player] = true
             HVCclient.giveWeapons(player,{{},true}, function(removedwep)
@@ -312,9 +312,8 @@ AddEventHandler('HVC:StoreWeaponsRequest', function(source)
         else
             HVCclient.notify(player,{"~o~Your weapons are already being stored!"})
         end
-	end)
+    end)
 end)
-
 
 --[[
 function tHVC.updateTimePlayed()
