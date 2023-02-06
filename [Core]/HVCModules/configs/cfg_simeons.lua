@@ -7,8 +7,8 @@ cfgsimeons.currency = "£"
 -- {x,y,z, heading}
 cfgsimeons.coords = {
     [0] = { -- Paleto Bay
-        ped = {-29.94, -1105.06, 26.42},
-        marker = {-29.94, -1105.06, 26.42},
+        ped = {-29.76264, -1105.121, 26.41541},
+        marker = {-29.76264, -1105.121, 26.41541},
     },
 } 
 
