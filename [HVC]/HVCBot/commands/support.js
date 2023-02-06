@@ -6,7 +6,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     message.delete()
     let embed = {
         "title": "Support Discord",
-        "description": `support discord invite`,
+        "description": `https://discord.gg/QxyBphgPZB`,
         "color": settingsjson.settings.botColour,
         "footer": {
             "text": ""
