@@ -97,6 +97,10 @@ cfg.garage_types = {
   
   ["VIP Vehicles"] = {
     _config = {vtype="Car",blipid=50,blipcolor=5,permissions={"vip.garage"}},
+
+	--Founder Locks    
+    ["foid"] = {"Foid RS3",999999999999999, ""},
+    ["urusvennum"] = {"Urus Vennum Founder Lock",999999999999999, ""},
 	--Baller Locks
 
   --Management Locks
