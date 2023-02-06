@@ -17,6 +17,6 @@ exports.runcmd = (fivemexports, client, message, params) => {
 }
 
 exports.conf = {
-    name: "nhscord",
+    name: "nhs",
     perm: 0
 }
