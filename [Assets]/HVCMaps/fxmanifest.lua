@@ -107,4 +107,3 @@ escrow_ignore {
     'stream/*.ybn',     -- Ignore all .ybn files in that folder
     'stream/extra/*.ydr',   -- Ignore all .ydr files in any subfolder
 }
-dependency '/assetpacks'
