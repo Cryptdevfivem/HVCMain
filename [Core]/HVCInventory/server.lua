@@ -1,8 +1,8 @@
 -- A JamesUK Production. Licensed users only. Use without authorisation is illegal, and a criminal offence under UK Law.
-local Tunnel = module("vrp", "lib/Tunnel")
-local Proxy = module("vrp", "lib/Proxy")
-local vRP = Proxy.getInterface("vRP")
-local vRPclient = Tunnel.getInterface("vRP","vRP") -- server -> client tunnel
+local Tunnel = module("HVC", "lib/Tunnel")
+local Proxy = module("HVC", "lib/Proxy")
+local HVC = Proxy.getInterface("HVC")
+local HVCclient = Tunnel.getInterface("HVC","HVC") -- server -> client tunnel
 local Inventory = module("AQUAVehicles", "cfg/cfg_inventory")
 local Housing = module("AQUAModules", "cfg/cfg_homes")
 local InventorySpamTrack = {} -- Stops inventory being spammed by users.
@@ -16,15 +16,15 @@ AddEventHandler('AQUARP:FetchPersonalInventory', function()
     local source = source
     if not InventorySpamTrack[source] then
         InventorySpamTrack[source] = true;
-        local UserId = vRP.getUserId({source}) 
-        local data = vRP.getUserDataTable({UserId})
+        local UserId = HVC.getUserId({source}) 
+        local data = HVC.getUserDataTable({UserId})
         if data and data.inventory then
             local FormattedInventoryData = {}
             --print(json.encode(data.inventory))
             for i,v in pairs(data.inventory) do
-                FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+                FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
             end
-            TriggerClientEvent('AQUARP:FetchPersonalInventory', source, FormattedInventoryData, vRP.computeItemsWeight({data.inventory}), vRP.getInventoryMaxWeight({UserId}))
+            TriggerClientEvent('AQUARP:FetchPersonalInventory', source, FormattedInventoryData, HVC.computeItemsWeight({data.inventory}), HVC.getInventoryMaxWeight({UserId}))
             InventorySpamTrack[source] = false;
         else 
             -- print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
@@ -34,14 +34,14 @@ end)
 
 
 AddEventHandler('AQUARP:RefreshInventory', function(source)
-    local UserId = vRP.getUserId({source}) 
-    local data = vRP.getUserDataTable({UserId})
+    local UserId = HVC.getUserId({source}) 
+    local data = HVC.getUserDataTable({UserId})
     if data and data.inventory then
         local FormattedInventoryData = {}
         for i,v in pairs(data.inventory) do
-            FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+            FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
         end
-        TriggerClientEvent('AQUARP:FetchPersonalInventory', source, FormattedInventoryData, vRP.computeItemsWeight({data.inventory}), vRP.getInventoryMaxWeight({UserId}))
+        TriggerClientEvent('AQUARP:FetchPersonalInventory', source, FormattedInventoryData, HVC.computeItemsWeight({data.inventory}), HVC.getInventoryMaxWeight({UserId}))
     else 
         -- print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
     end
@@ -50,22 +50,22 @@ end)
 RegisterNetEvent('AQUARP:GiveItem')
 AddEventHandler('AQUARP:GiveItem', function(itemId, itemLoc)
     local source = source
-    if not itemId then  vRPclient.notify(source, {'~d~You need to select an item, first!'}) return end
+    if not itemId then  HVCclient.notify(source, {'~d~You need to select an item, first!'}) return end
     if itemLoc == "Plr" then
-        vRP.RunGiveTask({source, itemId})
+        HVC.RunGiveTask({source, itemId})
     else
-        vRPclient.notify(source, {'~d~You need to have this item on you to give it.'})
+        HVCclient.notify(source, {'~d~You need to have this item on you to give it.'})
     end
 end)
 
 RegisterNetEvent('AQUARP:TrashItem')
 AddEventHandler('AQUARP:TrashItem', function(itemId, itemLoc)
     local source = source
-    if not itemId then  vRPclient.notify(source, {'~d~You need to select an item, first!'}) return end
+    if not itemId then  HVCclient.notify(source, {'~d~You need to select an item, first!'}) return end
     if itemLoc == "Plr" then
-        vRP.RunTrashTask({source, itemId})
+        HVC.RunTrashTask({source, itemId})
     else
-        vRPclient.notify(source, {'~d~You need to have this item on you to drop it.'})
+        HVCclient.notify(source, {'~d~You need to have this item on you to drop it.'})
     end
 end)
 
@@ -80,18 +80,18 @@ RegisterNetEvent('AQUARP:FetchTrunkInventory')
 AddEventHandler('AQUARP:FetchTrunkInventory', function(spawnCode, vehid)
     local source = source
     local idz = NetworkGetEntityFromNetworkId(vehid)
-    local user_id = vRP.getUserId({NetworkGetEntityOwner(idz)})
-    if InventoryCoolDown[source] then vRPclient.notify(source, {'~d~The server is having trouble caching the boot linked with your ID. Please rejoin.'}) return end
+    local user_id = HVC.getUserId({NetworkGetEntityOwner(idz)})
+    if InventoryCoolDown[source] then HVCclient.notify(source, {'~d~The server is having trouble caching the boot linked with your ID. Please rejoin.'}) return end
     local carformat = "chest:u1veh_" .. spawnCode .. '|' .. user_id
-    vRP.getSData({carformat, function(cdata)
+    HVC.getSData({carformat, function(cdata)
         local processedChest = {};
         cdata = json.decode(cdata) or {}
         local FormattedInventoryData = {}
         for i, v in pairs(cdata) do
-            FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+            FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
         end
         local maxVehKg = Inventory.vehicle_chest_weights[spawnCode] or Inventory.default_vehicle_chest_weight
-        TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({cdata}), maxVehKg)
+        TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({cdata}), maxVehKg)
     end})
 end)
 
@@ -99,19 +99,19 @@ RegisterNetEvent('AQUARP:FetchHouseInventory')
 AddEventHandler('AQUARP:FetchHouseInventory', function(nameHouse)
     local source = source
     houseName = nameHouse
-    local user_id = vRP.getUserId({source})
+    local user_id = HVC.getUserId({source})
     local homeformat = "chest:u" .. user_id .. "home" ..houseName
     --print(homeformat)
-    vRP.getSData({homeformat, function(cdata)
+    HVC.getSData({homeformat, function(cdata)
         local processedChest = {};
         cdata = json.decode(cdata) or {}
         local FormattedInventoryData = {}
         for i, v in pairs(cdata) do
-            FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+            FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
         end
         local maxVehKg = Housing.chestsize[houseName] or 500
       
-        TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({cdata}), maxVehKg)
+        TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({cdata}), maxVehKg)
     
     end})
 end)
@@ -120,8 +120,8 @@ end)
 
 RegisterNetEvent('AQUARP:LockPick')
 AddEventHandler('AQUARP:LockPick', function()
-    local user_id = vRP.getUserId({source})
-    if vRP.tryGetInventoryItem({user_id, "lockpick", 1, true}) then
+    local user_id = HVC.getUserId({source})
+    if HVC.tryGetInventoryItem({user_id, "lockpick", 1, true}) then
         TriggerClientEvent('AQUARP:whatIsThis', source)
     end  
 end)
@@ -129,11 +129,11 @@ end)
 RegisterNetEvent('AQUARP:UseItem')
 AddEventHandler('AQUARP:UseItem', function(itemId, itemLoc)
     local source = source
-    if not itemId then    vRPclient.notify(source, {'~d~You need to select an item, first!'}) return end
+    if not itemId then    HVCclient.notify(source, {'~d~You need to select an item, first!'}) return end
     if itemLoc == "Plr" then
-        vRP.RunInventoryTask({source, itemId})
+        HVC.RunInventoryTask({source, itemId})
     else
-        vRPclient.notify(source, {'~d~You need to have this item on you to use it.'})
+        HVCclient.notify(source, {'~d~You need to have this item on you to use it.'})
     end
 end)
 
@@ -141,10 +141,10 @@ end)
 RegisterNetEvent('AQUARP:MoveItem')
 AddEventHandler('AQUARP:MoveItem', function(inventoryType, itemId, inventoryInfo, Lootbag)
     local source = source
-    local UserId = vRP.getUserId({source}) 
-    local data = vRP.getUserDataTable({UserId})
-    if InventoryCoolDown[source] then vRPclient.notify(source, {'~d~Inventory Cooldown.'}) return end
-    if not itemId then  vRPclient.notify(source, {'~d~You need to select an item, first!'}) return end
+    local UserId = HVC.getUserId({source}) 
+    local data = HVC.getUserDataTable({UserId})
+    if InventoryCoolDown[source] then HVCclient.notify(source, {'~d~Inventory Cooldown.'}) return end
+    if not itemId then  HVCclient.notify(source, {'~d~You need to select an item, first!'}) return end
     if data and data.inventory then
         if inventoryInfo == nil then return end
         if inventoryType == "CarBoot" then
@@ -152,30 +152,30 @@ AddEventHandler('AQUARP:MoveItem', function(inventoryType, itemId, inventoryInfo
             local Quantity = parseInt(1)
             if Quantity then
                 local carformat = "chest:u1veh_" .. inventoryInfo .. '|' .. UserId
-                vRP.getSData({carformat, function(cdata)
+                HVC.getSData({carformat, function(cdata)
                     cdata = json.decode(cdata) or {}
                     if cdata[itemId] and cdata[itemId].amount >= 1 then
-                        local weightCalculation = vRP.getInventoryWeight({UserId})+vRP.getItemWeight({itemId})
-                        if weightCalculation <= vRP.getInventoryMaxWeight({UserId}) then
+                        local weightCalculation = HVC.getInventoryWeight({UserId})+HVC.getItemWeight({itemId})
+                        if weightCalculation <= HVC.getInventoryMaxWeight({UserId}) then
                             if cdata[itemId].amount > 1 then
                                 cdata[itemId].amount = cdata[itemId].amount - 1; 
-                                vRP.giveInventoryItem({UserId, itemId, 1, true})
+                                HVC.giveInventoryItem({UserId, itemId, 1, true})
                             else 
                                 cdata[itemId] = nil;
-                                vRP.giveInventoryItem({UserId, itemId, 1, true})
+                                HVC.giveInventoryItem({UserId, itemId, 1, true})
                             end 
                             local FormattedInventoryData = {}
                             for i, v in pairs(cdata) do
-                                FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+                                FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
                             end
                             local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
-                            TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({cdata}), maxVehKg)
+                            TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({cdata}), maxVehKg)
                             TriggerEvent('AQUARP:RefreshInventory', source)
                             --InventoryCoolDown[source] = false;
-                            vRP.setSData({carformat, json.encode(cdata)})
+                            HVC.setSData({carformat, json.encode(cdata)})
                         else 
                             --InventoryCoolDown[source] = false;
-                            vRPclient.notify(source, {'~d~You do not have enough inventory space.'})
+                            HVCclient.notify(source, {'~d~You do not have enough inventory space.'})
                         end
                     else 
                         --InventoryCoolDown[source] = false;
@@ -186,56 +186,56 @@ AddEventHandler('AQUARP:MoveItem', function(inventoryType, itemId, inventoryInfo
         elseif inventoryType == "LootBag" then  
             if LootBagEntities[inventoryInfo] ~= nil then  
                 if LootBagEntities[inventoryInfo].Items[itemId] then 
-                    local weightCalculation = vRP.getInventoryWeight({UserId})+vRP.getItemWeight({itemId})
-                    if weightCalculation <= vRP.getInventoryMaxWeight({UserId}) then
+                    local weightCalculation = HVC.getInventoryWeight({UserId})+HVC.getItemWeight({itemId})
+                    if weightCalculation <= HVC.getInventoryMaxWeight({UserId}) then
                         if LootBagEntities[inventoryInfo].Items[itemId] and LootBagEntities[inventoryInfo].Items[itemId].amount > 1 then
                             LootBagEntities[inventoryInfo].Items[itemId].amount = LootBagEntities[inventoryInfo].Items[itemId].amount - 1 
-                            vRP.giveInventoryItem({UserId, itemId, 1, true})
+                            HVC.giveInventoryItem({UserId, itemId, 1, true})
                         else 
                             LootBagEntities[inventoryInfo].Items[itemId] = nil;
-                            vRP.giveInventoryItem({UserId, itemId, 1, true})
+                            HVC.giveInventoryItem({UserId, itemId, 1, true})
                         end
                         local FormattedInventoryData = {}
                         for i, v in pairs(LootBagEntities[inventoryInfo].Items) do
-                            FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+                            FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
                         end
                         local maxVehKg = 200
-                        TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({LootBagEntities[inventoryInfo].Items}), maxVehKg)                
+                        TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({LootBagEntities[inventoryInfo].Items}), maxVehKg)                
                         TriggerEvent('AQUARP:RefreshInventory', source)
                     else 
-                        vRPclient.notify(source, {'~d~You do not have enough inventory space.'})
+                        HVCclient.notify(source, {'~d~You do not have enough inventory space.'})
                     end
                 end
             else
-                vRPclient.notify(source,{"~d~This item isn't available!"})
+                HVCclient.notify(source,{"~d~This item isn't available!"})
             end
         elseif inventoryType == "Housing" then
             local Quantity = parseInt(1)
             if Quantity then
                 local homeformat = "chest:u" .. UserId .. "home" ..houseName
-                vRP.getSData({homeformat, function(cdata)
+                HVC.getSData({homeformat, function(cdata)
                     cdata = json.decode(cdata) or {}
                     if cdata[itemId] and cdata[itemId].amount >= 1 then
-                        local weightCalculation = vRP.getInventoryWeight({UserId})+vRP.getItemWeight({itemId})
-                        if weightCalculation <= vRP.getInventoryMaxWeight({UserId}) then
+                        local weightCalculation = HVC.getInventoryWeight({UserId})+HVC.getItemWeight({itemId})
+                        if weightCalculation <= HVC.getInventoryMaxWeight({UserId}) then
                             if cdata[itemId].amount > 1 then
                                 cdata[itemId].amount = cdata[itemId].amount - 1; 
-                                vRP.giveInventoryItem({UserId, itemId, 1, true})
+                                HVC.giveInventoryItem({UserId, itemId, 1, true})
                             else 
                                 cdata[itemId] = nil;
-                                vRP.giveInventoryItem({UserId, itemId, 1, true})
+                                HVC.giveInventoryItem({UserId, itemId, 1, true})
                             end 
                             local FormattedInventoryData = {}
                             for i, v in pairs(cdata) do
-                                FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+                                FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
                             end
                             local maxVehKg = Housing.chestsize[houseName] or 500
                             --local maxVehKg = 500
-                            TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({cdata}), maxVehKg)
+                            TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({cdata}), maxVehKg)
                             TriggerEvent('AQUARP:RefreshInventory', source)
-                            vRP.setSData({homeformat, json.encode(cdata)})
+                            HVC.setSData({homeformat, json.encode(cdata)})
                         else 
-                            vRPclient.notify(source, {'~d~You do not have enough inventory space.'})
+                            HVCclient.notify(source, {'~d~You do not have enough inventory space.'})
                         end
                     else 
                         -- print('[^7JamesUKInventory]^1: An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the home.')
@@ -248,13 +248,13 @@ AddEventHandler('AQUARP:MoveItem', function(inventoryType, itemId, inventoryInfo
                     --InventoryCoolDown[source] = true;
                     if inventoryInfo == "home" then --start of housing intergration (moveitem)
                         local homeFormat = "chest:u" .. UserId .. "home" ..houseName
-                        vRP.getSData({homeFormat, function(cdata)
+                        HVC.getSData({homeFormat, function(cdata)
                             cdata = json.decode(cdata) or {}
                             if data.inventory[itemId] and data.inventory[itemId].amount >= 1 then
-                                local weightCalculation = vRP.computeItemsWeight({cdata})+vRP.getItemWeight({itemId})
+                                local weightCalculation = HVC.computeItemsWeight({cdata})+HVC.getItemWeight({itemId})
                                 local maxVehKg = Housing.chestsize[houseName] or 500
                                 if weightCalculation <= maxVehKg then
-                                    if vRP.tryGetInventoryItem({UserId, itemId, 1, true}) then
+                                    if HVC.tryGetInventoryItem({UserId, itemId, 1, true}) then
                                         if cdata[itemId] then
                                         cdata[itemId].amount = cdata[itemId].amount + 1
                                         else 
@@ -264,14 +264,14 @@ AddEventHandler('AQUARP:MoveItem', function(inventoryType, itemId, inventoryInfo
                                     end 
                                     local FormattedInventoryData = {}
                                     for i, v in pairs(cdata) do
-                                        FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+                                        FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
                                     end
                                     local maxVehKg = Housing.chestsize[houseName] or 500
-                                    TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({cdata}), maxVehKg)
+                                    TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({cdata}), maxVehKg)
                                     TriggerEvent('AQUARP:RefreshInventory', source)
-                                    vRP.setSData({"chest:u" .. UserId .. "home" ..houseName, json.encode(cdata)})
+                                    HVC.setSData({"chest:u" .. UserId .. "home" ..houseName, json.encode(cdata)})
                                 else 
-                                    vRPclient.notify(source, {'~d~You do not have enough inventory space.'})
+                                    HVCclient.notify(source, {'~d~You do not have enough inventory space.'})
                                 end
                             else 
                                 -- print('[^7JamesUKInventory]^1: An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the home.')
@@ -279,13 +279,13 @@ AddEventHandler('AQUARP:MoveItem', function(inventoryType, itemId, inventoryInfo
                         end}) --end of housing intergration (moveitem)
                     else
                         local carformat = "chest:u1veh_" .. inventoryInfo .. '|' .. UserId
-                        vRP.getSData({carformat, function(cdata)
+                        HVC.getSData({carformat, function(cdata)
                             cdata = json.decode(cdata) or {}
                             if data.inventory[itemId] and data.inventory[itemId].amount >= 1 then
-                                local weightCalculation = vRP.computeItemsWeight({cdata})+vRP.getItemWeight({itemId})
+                                local weightCalculation = HVC.computeItemsWeight({cdata})+HVC.getItemWeight({itemId})
                                 local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
                                 if weightCalculation <= maxVehKg then
-                                    if vRP.tryGetInventoryItem({UserId, itemId, 1, true}) then
+                                    if HVC.tryGetInventoryItem({UserId, itemId, 1, true}) then
                                         if cdata[itemId] then
                                         cdata[itemId].amount = cdata[itemId].amount + 1
                                         else 
@@ -295,16 +295,16 @@ AddEventHandler('AQUARP:MoveItem', function(inventoryType, itemId, inventoryInfo
                                     end 
                                     local FormattedInventoryData = {}
                                     for i, v in pairs(cdata) do
-                                        FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+                                        FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
                                     end
                                     local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
-                                    TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({cdata}), maxVehKg)
+                                    TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({cdata}), maxVehKg)
                                     TriggerEvent('AQUARP:RefreshInventory', source)
                                     --InventoryCoolDown[source] = nil;
-                                    vRP.setSData({carformat, json.encode(cdata)})
+                                    HVC.setSData({carformat, json.encode(cdata)})
                                 else 
                                     --InventoryCoolDown[source] = nil;
-                                    vRPclient.notify(source, {'~d~You do not have enough inventory space.'})
+                                    HVCclient.notify(source, {'~d~You do not have enough inventory space.'})
                                 end
                             else 
                                 --InventoryCoolDown[source] = nil;
@@ -329,130 +329,130 @@ end)
 RegisterNetEvent('AQUARP:MoveItemX')
 AddEventHandler('AQUARP:MoveItemX', function(inventoryType, itemId, inventoryInfo, Lootbag)
     local source = source
-    local UserId = vRP.getUserId({source}) 
-    local data = vRP.getUserDataTable({UserId})
-    if InventoryCoolDown[source] then vRPclient.notify(source, {'~d~Inventory Cooldown.'}) return end
-    if not itemId then  vRPclient.notify(source, {'~d~You need to select an item, first!'}) return end
+    local UserId = HVC.getUserId({source}) 
+    local data = HVC.getUserDataTable({UserId})
+    if InventoryCoolDown[source] then HVCclient.notify(source, {'~d~Inventory Cooldown.'}) return end
+    if not itemId then  HVCclient.notify(source, {'~d~You need to select an item, first!'}) return end
     if data and data.inventory then
         if inventoryInfo == nil then return end
         if inventoryType == "CarBoot" then
             --InventoryCoolDown[source] = true;
             TriggerClientEvent('AQUARP:ToggleNUIFocus', source, false)
-            vRP.prompt({source, 'How many ' .. vRP.getItemName({itemId}) .. 's. Do you want to move?', "", function(player, Quantity)
+            HVC.prompt({source, 'How many ' .. HVC.getItemName({itemId}) .. 's. Do you want to move?', "", function(player, Quantity)
                 Quantity = parseInt(Quantity)
                 TriggerClientEvent('AQUARP:ToggleNUIFocus', source, true)
                 if Quantity >= 1 then
                     local carformat = "chest:u1veh_" .. inventoryInfo .. '|' .. UserId
-                    vRP.getSData({carformat, function(cdata)
+                    HVC.getSData({carformat, function(cdata)
                         cdata = json.decode(cdata) or {}
                         if cdata[itemId] and Quantity <= cdata[itemId].amount  then
-                            local weightCalculation = vRP.getInventoryWeight({UserId})+(vRP.getItemWeight({itemId}) * Quantity)
-                            if weightCalculation <= vRP.getInventoryMaxWeight({UserId}) then
+                            local weightCalculation = HVC.getInventoryWeight({UserId})+(HVC.getItemWeight({itemId}) * Quantity)
+                            if weightCalculation <= HVC.getInventoryMaxWeight({UserId}) then
                                 if cdata[itemId].amount > Quantity then
                                     cdata[itemId].amount = cdata[itemId].amount - Quantity; 
-                                    vRP.giveInventoryItem({UserId, itemId, Quantity, true})
+                                    HVC.giveInventoryItem({UserId, itemId, Quantity, true})
                                 else 
                                     cdata[itemId] = nil;
-                                    vRP.giveInventoryItem({UserId, itemId, Quantity, true})
+                                    HVC.giveInventoryItem({UserId, itemId, Quantity, true})
                                 end 
                                 local FormattedInventoryData = {}
                                 for i, v in pairs(cdata) do
-                                    FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+                                    FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
                                 end
                                 local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
-                                TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({cdata}), maxVehKg)
+                                TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({cdata}), maxVehKg)
                                 TriggerEvent('AQUARP:RefreshInventory', source)
                                 --InventoryCoolDown[source] = nil;
-                                vRP.setSData({carformat, json.encode(cdata)})
+                                HVC.setSData({carformat, json.encode(cdata)})
                             else 
                                 --InventoryCoolDown[source] = nil;
-                                vRPclient.notify(source, {'~d~You do not have enough inventory space.'})
+                                HVCclient.notify(source, {'~d~You do not have enough inventory space.'})
                             end
                         else 
                             --InventoryCoolDown[source] = nil;
-                            vRPclient.notify(source, {'~d~You are trying to move more then there actually is!'})
+                            HVCclient.notify(source, {'~d~You are trying to move more then there actually is!'})
                         end
                     end})
                 else
                     --InventoryCoolDown[source] = nil;
-                    vRPclient.notify(source, {'~d~Invalid Amount!'})
+                    HVCclient.notify(source, {'~d~Invalid Amount!'})
                 end
             end})
         elseif inventoryType == "LootBag" then 
             if LootBagEntities[inventoryInfo] ~= nil then  
                 if LootBagEntities[inventoryInfo].Items[itemId] then 
                     TriggerClientEvent('AQUARP:ToggleNUIFocus', source, false)
-                    vRP.prompt({source, 'How many ' .. vRP.getItemName({itemId}) .. 's. Do you want to move?', "", function(player, Quantity)
+                    HVC.prompt({source, 'How many ' .. HVC.getItemName({itemId}) .. 's. Do you want to move?', "", function(player, Quantity)
                         Quantity = parseInt(Quantity)
                         TriggerClientEvent('AQUARP:ToggleNUIFocus', source, true)
                         if Quantity then
-                            local weightCalculation = vRP.getInventoryWeight({UserId})+(vRP.getItemWeight({itemId}) * Quantity)
-                            if weightCalculation <= vRP.getInventoryMaxWeight({UserId}) then
+                            local weightCalculation = HVC.getInventoryWeight({UserId})+(HVC.getItemWeight({itemId}) * Quantity)
+                            if weightCalculation <= HVC.getInventoryMaxWeight({UserId}) then
                                 if Quantity <= LootBagEntities[inventoryInfo].Items[itemId].amount then 
                                     if LootBagEntities[inventoryInfo].Items[itemId] and LootBagEntities[inventoryInfo].Items[itemId].amount > Quantity then
                                         LootBagEntities[inventoryInfo].Items[itemId].amount = LootBagEntities[inventoryInfo].Items[itemId].amount - Quantity
-                                        vRP.giveInventoryItem({UserId, itemId, Quantity, true})
+                                        HVC.giveInventoryItem({UserId, itemId, Quantity, true})
                                     else 
                                         LootBagEntities[inventoryInfo].Items[itemId] = nil;
-                                        vRP.giveInventoryItem({UserId, itemId, Quantity, true})
+                                        HVC.giveInventoryItem({UserId, itemId, Quantity, true})
                                     end
                                     local FormattedInventoryData = {}
                                     for i, v in pairs(LootBagEntities[inventoryInfo].Items) do
-                                        FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+                                        FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
                                     end
                                     local maxVehKg = 200
-                                    TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({LootBagEntities[inventoryInfo].Items}), maxVehKg)                
+                                    TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({LootBagEntities[inventoryInfo].Items}), maxVehKg)                
                                     TriggerEvent('AQUARP:RefreshInventory', source)
                                 else 
-                                    vRPclient.notify(source, {'~d~You are trying to move more then there actually is!'})
+                                    HVCclient.notify(source, {'~d~You are trying to move more then there actually is!'})
                                 end 
                             else 
-                                vRPclient.notify(source, {'~d~You do not have enough inventory space.'})
+                                HVCclient.notify(source, {'~d~You do not have enough inventory space.'})
                             end
                         else 
-                            vRPclient.notify(source, {'~d~Invalid input!'})
+                            HVCclient.notify(source, {'~d~Invalid input!'})
                         end
                     end})
                 else
-                    vRPclient.notify(source,{"~d~This item isn't available!"})
+                    HVCclient.notify(source,{"~d~This item isn't available!"})
                 end
             end
         elseif inventoryType == "Housing" then
             TriggerClientEvent('AQUARP:ToggleNUIFocus', source, false)
-            vRP.prompt({source, 'How many ' .. vRP.getItemName({itemId}) .. 's. Do you want to move?', "", function(player, Quantity)
+            HVC.prompt({source, 'How many ' .. HVC.getItemName({itemId}) .. 's. Do you want to move?', "", function(player, Quantity)
                 Quantity = parseInt(Quantity)
                 TriggerClientEvent('AQUARP:ToggleNUIFocus', source, true)
                 if Quantity then
                     local homeformat = "chest:u" .. UserId .. "home" ..houseName
-                    vRP.getSData({homeformat, function(cdata)
+                    HVC.getSData({homeformat, function(cdata)
                         cdata = json.decode(cdata) or {}
                         if cdata[itemId] and Quantity <= cdata[itemId].amount  then
-                            local weightCalculation = vRP.getInventoryWeight({UserId})+(vRP.getItemWeight({itemId}) * Quantity)
-                            if weightCalculation <= vRP.getInventoryMaxWeight({UserId}) then
+                            local weightCalculation = HVC.getInventoryWeight({UserId})+(HVC.getItemWeight({itemId}) * Quantity)
+                            if weightCalculation <= HVC.getInventoryMaxWeight({UserId}) then
                                 if cdata[itemId].amount > Quantity then
                                     cdata[itemId].amount = cdata[itemId].amount - Quantity; 
-                                    vRP.giveInventoryItem({UserId, itemId, Quantity, true})
+                                    HVC.giveInventoryItem({UserId, itemId, Quantity, true})
                                 else 
                                     cdata[itemId] = nil;
-                                    vRP.giveInventoryItem({UserId, itemId, Quantity, true})
+                                    HVC.giveInventoryItem({UserId, itemId, Quantity, true})
                                 end 
                                 local FormattedInventoryData = {}
                                 for i, v in pairs(cdata) do
-                                    FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+                                    FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
                                 end
                                 local maxVehKg = Housing.chestsize[houseName] or 500
-                                TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({cdata}), maxVehKg)
+                                TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({cdata}), maxVehKg)
                                 TriggerEvent('AQUARP:RefreshInventory', source)
-                                vRP.setSData({"chest:u" .. UserId .. "home" ..houseName, json.encode(cdata)})
+                                HVC.setSData({"chest:u" .. UserId .. "home" ..houseName, json.encode(cdata)})
                             else 
-                                vRPclient.notify(source, {'~d~You do not have enough inventory space.'})
+                                HVCclient.notify(source, {'~d~You do not have enough inventory space.'})
                             end
                         else 
-                            vRPclient.notify(source, {'~d~You are trying to move more then there actually is!'})
+                            HVCclient.notify(source, {'~d~You are trying to move more then there actually is!'})
                         end
                     end})
                 else 
-                    vRPclient.notify(source, {'~d~Invalid input!'})
+                    HVCclient.notify(source, {'~d~Invalid input!'})
                 end
             end})
         elseif inventoryType == "Plr" then
@@ -462,18 +462,18 @@ AddEventHandler('AQUARP:MoveItemX', function(inventoryType, itemId, inventoryInf
                     TriggerClientEvent('AQUARP:ToggleNUIFocus', source, false)
                     if inventoryInfo == "home" then --start of housing intergration (moveitemx)
                         TriggerClientEvent('AQUARP:ToggleNUIFocus', source, false)
-                        vRP.prompt({source, 'How many ' .. vRP.getItemName({itemId}) .. 's. Do you want to move?', "", function(player, Quantity)
+                        HVC.prompt({source, 'How many ' .. HVC.getItemName({itemId}) .. 's. Do you want to move?', "", function(player, Quantity)
                             Quantity = parseInt(Quantity)
                             TriggerClientEvent('AQUARP:ToggleNUIFocus', source, true)
                             if Quantity then
                                 local homeFormat = "chest:u" .. UserId .. "home" ..houseName
-                                vRP.getSData({homeFormat, function(cdata)
+                                HVC.getSData({homeFormat, function(cdata)
                                     cdata = json.decode(cdata) or {}
                                     if data.inventory[itemId] and Quantity <= data.inventory[itemId].amount  then
-                                        local weightCalculation = vRP.computeItemsWeight({cdata})+(vRP.getItemWeight({itemId}) * Quantity)
+                                        local weightCalculation = HVC.computeItemsWeight({cdata})+(HVC.getItemWeight({itemId}) * Quantity)
                                         local maxVehKg = Housing.chestsize[houseName] or 500
                                         if weightCalculation <= maxVehKg then
-                                            if vRP.tryGetInventoryItem({UserId, itemId, Quantity, true}) then
+                                            if HVC.tryGetInventoryItem({UserId, itemId, Quantity, true}) then
                                                 if cdata[itemId] then
                                                     cdata[itemId].amount = cdata[itemId].amount + Quantity
                                                 else 
@@ -483,36 +483,36 @@ AddEventHandler('AQUARP:MoveItemX', function(inventoryType, itemId, inventoryInf
                                             end 
                                             local FormattedInventoryData = {}
                                             for i, v in pairs(cdata) do
-                                                FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+                                                FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
                                             end
                                             local maxVehKg = Housing.chestsize[houseName] or 500
-                                            TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({cdata}), maxVehKg)
+                                            TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({cdata}), maxVehKg)
                                             TriggerEvent('AQUARP:RefreshInventory', source)
-                                            vRP.setSData({"chest:u" .. UserId .. "home" ..houseName, json.encode(cdata)})
+                                            HVC.setSData({"chest:u" .. UserId .. "home" ..houseName, json.encode(cdata)})
                                         else 
-                                            vRPclient.notify(source, {'~d~You do not have enough inventory space.'})
+                                            HVCclient.notify(source, {'~d~You do not have enough inventory space.'})
                                         end
                                     else 
-                                        vRPclient.notify(source, {'~d~You are trying to move more then there actually is!'})
+                                        HVCclient.notify(source, {'~d~You are trying to move more then there actually is!'})
                                     end
                                 end})
                             else 
-                                vRPclient.notify(source, {'~d~Invalid input!'})
+                                HVCclient.notify(source, {'~d~Invalid input!'})
                             end
                         end}) --end of housing intergration (moveitemx)
                     else
-                        vRP.prompt({source, 'How many ' .. vRP.getItemName({itemId}) .. 's. Do you want to move?', "", function(player, Quantity)
+                        HVC.prompt({source, 'How many ' .. HVC.getItemName({itemId}) .. 's. Do you want to move?', "", function(player, Quantity)
                             Quantity = parseInt(Quantity)
                             TriggerClientEvent('AQUARP:ToggleNUIFocus', source, true)
                             if Quantity then
                                 local carformat = "chest:u1veh_" .. inventoryInfo .. '|' .. UserId
-                                vRP.getSData({carformat, function(cdata)
+                                HVC.getSData({carformat, function(cdata)
                                     cdata = json.decode(cdata) or {}
                                     if data.inventory[itemId] and Quantity <= data.inventory[itemId].amount  then
-                                        local weightCalculation = vRP.computeItemsWeight({cdata})+(vRP.getItemWeight({itemId}) * Quantity)
+                                        local weightCalculation = HVC.computeItemsWeight({cdata})+(HVC.getItemWeight({itemId}) * Quantity)
                                         local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
                                         if weightCalculation <= maxVehKg then
-                                            if vRP.tryGetInventoryItem({UserId, itemId, Quantity, true}) then
+                                            if HVC.tryGetInventoryItem({UserId, itemId, Quantity, true}) then
                                                 if cdata[itemId] then
                                                     cdata[itemId].amount = cdata[itemId].amount + Quantity
                                                 else 
@@ -522,24 +522,24 @@ AddEventHandler('AQUARP:MoveItemX', function(inventoryType, itemId, inventoryInf
                                             end 
                                             local FormattedInventoryData = {}
                                             for i, v in pairs(cdata) do
-                                                FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+                                                FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
                                             end
                                             local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
-                                            TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({cdata}), maxVehKg)
+                                            TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({cdata}), maxVehKg)
                                             TriggerEvent('AQUARP:RefreshInventory', source)
                                             --InventoryCoolDown[source] = nil;
-                                            vRP.setSData({carformat, json.encode(cdata)})
+                                            HVC.setSData({carformat, json.encode(cdata)})
                                         else 
                                             --InventoryCoolDown[source] = nil;
-                                            vRPclient.notify(source, {'~d~You do not have enough inventory space.'})
+                                            HVCclient.notify(source, {'~d~You do not have enough inventory space.'})
                                         end
                                     else 
                                         --InventoryCoolDown[source] = nil;
-                                        vRPclient.notify(source, {'~d~You are trying to move more then there actually is!'})
+                                        HVCclient.notify(source, {'~d~You are trying to move more then there actually is!'})
                                     end
                                 end})
                             else 
-                                vRPclient.notify(source, {'~d~Invalid input!'})
+                                HVCclient.notify(source, {'~d~Invalid input!'})
                             end
                         end})
                     end
@@ -557,89 +557,89 @@ end)
 RegisterNetEvent('AQUARP:MoveItemAll')
 AddEventHandler('AQUARP:MoveItemAll', function(inventoryType, itemId, inventoryInfo, vehid)
     local source = source
-    local UserId = vRP.getUserId({source}) 
-    local data = vRP.getUserDataTable({UserId})
-    if not itemId then  vRPclient.notify(source, {'~d~You need to select an item, first!'}) return end
-    if InventoryCoolDown[source] then vRPclient.notify(source, {'~d~Inventory Cooldown.'}) return end
+    local UserId = HVC.getUserId({source}) 
+    local data = HVC.getUserDataTable({UserId})
+    if not itemId then  HVCclient.notify(source, {'~d~You need to select an item, first!'}) return end
+    if InventoryCoolDown[source] then HVCclient.notify(source, {'~d~Inventory Cooldown.'}) return end
     if data and data.inventory then
         if inventoryInfo == nil then return end
         if inventoryType == "CarBoot" then
             --InventoryCoolDown[source] = true;
             local idz = NetworkGetEntityFromNetworkId(vehid)
-            local user_id = vRP.getUserId({NetworkGetEntityOwner(idz)})
+            local user_id = HVC.getUserId({NetworkGetEntityOwner(idz)})
             local carformat = "chest:u1veh_" .. inventoryInfo .. '|' .. user_id
-            vRP.getSData({carformat, function(cdata)
+            HVC.getSData({carformat, function(cdata)
                 cdata = json.decode(cdata) or {}
                 if cdata[itemId] and cdata[itemId].amount <= cdata[itemId].amount  then
-                    local weightCalculation = vRP.getInventoryWeight({user_id})+(vRP.getItemWeight({itemId}) * cdata[itemId].amount)
-                    if weightCalculation <= vRP.getInventoryMaxWeight({user_id}) then
-                        vRP.giveInventoryItem({user_id, itemId, cdata[itemId].amount, true})
+                    local weightCalculation = HVC.getInventoryWeight({user_id})+(HVC.getItemWeight({itemId}) * cdata[itemId].amount)
+                    if weightCalculation <= HVC.getInventoryMaxWeight({user_id}) then
+                        HVC.giveInventoryItem({user_id, itemId, cdata[itemId].amount, true})
                         cdata[itemId] = nil;
                         local FormattedInventoryData = {}
                         for i, v in pairs(cdata) do
-                            FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+                            FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
                         end
                         local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
-                        TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({cdata}), maxVehKg)
+                        TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({cdata}), maxVehKg)
                         TriggerEvent('AQUARP:RefreshInventory', source)
                         --InventoryCoolDown[source] = nil;
-                        vRP.setSData({carformat, json.encode(cdata)})
+                        HVC.setSData({carformat, json.encode(cdata)})
                     else 
                         --InventoryCoolDown[source] = nil;
-                        vRPclient.notify(source, {'~d~You do not have enough inventory space.'})
+                        HVCclient.notify(source, {'~d~You do not have enough inventory space.'})
                     end
                 else 
                     --InventoryCoolDown[source] = nil;
-                    vRPclient.notify(source, {'~d~You are trying to move more then there actually is!'})
+                    HVCclient.notify(source, {'~d~You are trying to move more then there actually is!'})
                 end
             end})
         elseif inventoryType == "LootBag" then 
             if LootBagEntities[inventoryInfo] ~= nil then  
                 if LootBagEntities[inventoryInfo].Items[itemId] then 
-                    local weightCalculation = vRP.getInventoryWeight({UserId})+(vRP.getItemWeight({itemId}) *  LootBagEntities[inventoryInfo].Items[itemId].amount)
-                    if weightCalculation <= vRP.getInventoryMaxWeight({UserId}) then
+                    local weightCalculation = HVC.getInventoryWeight({UserId})+(HVC.getItemWeight({itemId}) *  LootBagEntities[inventoryInfo].Items[itemId].amount)
+                    if weightCalculation <= HVC.getInventoryMaxWeight({UserId}) then
                         if  LootBagEntities[inventoryInfo].Items[itemId].amount <= LootBagEntities[inventoryInfo].Items[itemId].amount then 
-                            vRP.giveInventoryItem({UserId, itemId, LootBagEntities[inventoryInfo].Items[itemId].amount, true})
+                            HVC.giveInventoryItem({UserId, itemId, LootBagEntities[inventoryInfo].Items[itemId].amount, true})
                             LootBagEntities[inventoryInfo].Items[itemId] = nil;
                             local FormattedInventoryData = {}
                             for i, v in pairs(LootBagEntities[inventoryInfo].Items) do
-                                FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+                                FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
                             end
                             local maxVehKg = 200
-                            TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({LootBagEntities[inventoryInfo].Items}), maxVehKg)                
+                            TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({LootBagEntities[inventoryInfo].Items}), maxVehKg)                
                             TriggerEvent('AQUARP:RefreshInventory', source)
                         else 
-                            vRPclient.notify(source, {'~d~You are trying to move more then there actually is!'})
+                            HVCclient.notify(source, {'~d~You are trying to move more then there actually is!'})
                         end 
                     else 
-                        vRPclient.notify(source, {'~d~You do not have enough inventory space.'})
+                        HVCclient.notify(source, {'~d~You do not have enough inventory space.'})
                     end
                 end
             else
-                vRPclient.notify(source,{"~d~This item isn't available!"})
+                HVCclient.notify(source,{"~d~This item isn't available!"})
             end
         elseif inventoryType == "Housing" then
             local homeformat = "chest:u" .. UserId .. "home" ..houseName
-            vRP.getSData({homeformat, function(cdata)
+            HVC.getSData({homeformat, function(cdata)
                 cdata = json.decode(cdata) or {}
                 if cdata[itemId] and cdata[itemId].amount <= cdata[itemId].amount  then
-                    local weightCalculation = vRP.getInventoryWeight({UserId})+(vRP.getItemWeight({itemId}) * cdata[itemId].amount)
-                    if weightCalculation <= vRP.getInventoryMaxWeight({UserId}) then
-                        vRP.giveInventoryItem({UserId, itemId, cdata[itemId].amount, true})
+                    local weightCalculation = HVC.getInventoryWeight({UserId})+(HVC.getItemWeight({itemId}) * cdata[itemId].amount)
+                    if weightCalculation <= HVC.getInventoryMaxWeight({UserId}) then
+                        HVC.giveInventoryItem({UserId, itemId, cdata[itemId].amount, true})
                         cdata[itemId] = nil;
                         local FormattedInventoryData = {}
                         for i, v in pairs(cdata) do
-                            FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+                            FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
                         end
                         local maxVehKg = Housing.chestsize[houseName] or 500
-                        TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({cdata}), maxVehKg)
+                        TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({cdata}), maxVehKg)
                         TriggerEvent('AQUARP:RefreshInventory', source)
-                        vRP.setSData({"chest:u" .. UserId .. "home" ..houseName, json.encode(cdata)})
+                        HVC.setSData({"chest:u" .. UserId .. "home" ..houseName, json.encode(cdata)})
                     else 
-                        vRPclient.notify(source, {'~d~You do not have enough inventory space.'})
+                        HVCclient.notify(source, {'~d~You do not have enough inventory space.'})
                     end
                 else 
-                    vRPclient.notify(source, {'~d~You are trying to move more then there actually is!'})
+                    HVCclient.notify(source, {'~d~You are trying to move more then there actually is!'})
                 end
             end})
         elseif inventoryType == "Plr" then
@@ -648,13 +648,13 @@ AddEventHandler('AQUARP:MoveItemAll', function(inventoryType, itemId, inventoryI
                     --InventoryCoolDown[source] = true;
                     if inventoryInfo == "home" then --start of housing intergration (moveitemall)
                         local homeFormat = "chest:u" .. UserId .. "home" ..houseName
-                        vRP.getSData({homeFormat, function(cdata)
+                        HVC.getSData({homeFormat, function(cdata)
                             cdata = json.decode(cdata) or {}
                             if data.inventory[itemId] and data.inventory[itemId].amount <= data.inventory[itemId].amount  then
-                                local weightCalculation = vRP.computeItemsWeight({cdata})+(vRP.getItemWeight({itemId}) * data.inventory[itemId].amount)
+                                local weightCalculation = HVC.computeItemsWeight({cdata})+(HVC.getItemWeight({itemId}) * data.inventory[itemId].amount)
                                 local maxVehKg = Housing.chestsize[houseName] or 500
                                 if weightCalculation <= maxVehKg then
-                                    if vRP.tryGetInventoryItem({UserId, itemId, data.inventory[itemId].amount, true}) then
+                                    if HVC.tryGetInventoryItem({UserId, itemId, data.inventory[itemId].amount, true}) then
                                         if cdata[itemId] then
                                             cdata[itemId].amount = cdata[itemId].amount + data.inventory[itemId].amount
                                         else 
@@ -664,28 +664,28 @@ AddEventHandler('AQUARP:MoveItemAll', function(inventoryType, itemId, inventoryI
                                     end 
                                     local FormattedInventoryData = {}
                                     for i, v in pairs(cdata) do
-                                        FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+                                        FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
                                     end
                                     local maxVehKg = Housing.chestsize[houseName] or 500
-                                    TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({cdata}), maxVehKg)
+                                    TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({cdata}), maxVehKg)
                                     TriggerEvent('AQUARP:RefreshInventory', source)
-                                    vRP.setSData({"chest:u" .. UserId .. "home" ..houseName, json.encode(cdata)})
+                                    HVC.setSData({"chest:u" .. UserId .. "home" ..houseName, json.encode(cdata)})
                                 else 
-                                    vRPclient.notify(source, {'~d~You do not have enough inventory space.'})
+                                    HVCclient.notify(source, {'~d~You do not have enough inventory space.'})
                                 end
                             else 
-                                vRPclient.notify(source, {'~d~You are trying to move more then there actually is!'})
+                                HVCclient.notify(source, {'~d~You are trying to move more then there actually is!'})
                             end
                         end}) --end of housing intergration (moveitemall)
                     else 
                         local carformat = "chest:u1veh_" .. inventoryInfo .. '|' .. UserId
-                        vRP.getSData({carformat, function(cdata)
+                        HVC.getSData({carformat, function(cdata)
                             cdata = json.decode(cdata) or {}
                             if data.inventory[itemId] and data.inventory[itemId].amount <= data.inventory[itemId].amount  then
-                                local weightCalculation = vRP.computeItemsWeight({cdata})+(vRP.getItemWeight({itemId}) * data.inventory[itemId].amount)
+                                local weightCalculation = HVC.computeItemsWeight({cdata})+(HVC.getItemWeight({itemId}) * data.inventory[itemId].amount)
                                 local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
                                 if weightCalculation <= maxVehKg then
-                                    if vRP.tryGetInventoryItem({UserId, itemId, data.inventory[itemId].amount, true}) then
+                                    if HVC.tryGetInventoryItem({UserId, itemId, data.inventory[itemId].amount, true}) then
                                         if cdata[itemId] then
                                             cdata[itemId].amount = cdata[itemId].amount + data.inventory[itemId].amount
                                         else 
@@ -695,20 +695,20 @@ AddEventHandler('AQUARP:MoveItemAll', function(inventoryType, itemId, inventoryI
                                     end 
                                     local FormattedInventoryData = {}
                                     for i, v in pairs(cdata) do
-                                        FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+                                        FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
                                     end
                                     local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
-                                    TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({cdata}), maxVehKg)
+                                    TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({cdata}), maxVehKg)
                                     TriggerEvent('AQUARP:RefreshInventory', source)
                                     --InventoryCoolDown[source] = nil;
-                                    vRP.setSData({carformat, json.encode(cdata)})
+                                    HVC.setSData({carformat, json.encode(cdata)})
                                 else 
                                     --InventoryCoolDown[source] = nil;
-                                    vRPclient.notify(source, {'~d~You do not have enough inventory space.'})
+                                    HVCclient.notify(source, {'~d~You do not have enough inventory space.'})
                                 end
                             else 
                                 --InventoryCoolDown[source] = nil;
-                                vRPclient.notify(source, {'~d~You are trying to move more then there actually is!'})
+                                HVCclient.notify(source, {'~d~You are trying to move more then there actually is!'})
                             end
                         end})
                     end
@@ -727,17 +727,17 @@ end)
 
 -- LOOTBAGS CODE BELOW HERE 
 
-RegisterNetEvent('vRP:InComa')
-AddEventHandler('vRP:InComa', function()
+RegisterNetEvent('HVC:InComa')
+AddEventHandler('HVC:InComa', function()
     local source = source
-    local user_id = vRP.getUserId({source})
-    vRPclient.isInComa(source, {}, function(in_coma) 
+    local user_id = HVC.getUserId({source})
+    HVCclient.isInComa(source, {}, function(in_coma) 
         if in_coma then
             Wait(3000)
            
-            local weight = vRP.getInventoryWeight({user_id})
+            local weight = HVC.getInventoryWeight({user_id})
 
-            if vRP.hasPermission({user_id, "pd.armory"}) or weight == 0 then 
+            if HVC.hasPermission({user_id, "pd.armory"}) or weight == 0 then 
                 return 
             end
 
@@ -746,7 +746,7 @@ AddEventHandler('vRP:InComa', function()
             local lootbag = CreateObjectNoOffset(model, GetEntityCoords(GetPlayerPed(source)), true, true, false)
             local lootbagnetid = NetworkGetNetworkIdFromEntity(lootbag)
             --PlaceObjectOnGroundProperly(lootbag)
-            local ndata = vRP.getUserDataTable({user_id})
+            local ndata = HVC.getUserDataTable({user_id})
             local stored_inventory = nil;
 
             TriggerEvent('AQUARP:StoreWeaponsRequest', source)
@@ -758,7 +758,7 @@ AddEventHandler('vRP:InComa', function()
             if ndata ~= nil then
                 if ndata.inventory ~= nil then
                     stored_inventory = ndata.inventory
-                    vRP.clearInventory({user_id})
+                    HVC.clearInventory({user_id})
                     for k, v in pairs(stored_inventory) do
                         LootBagEntities[lootbagnetid].Items[k] = {}
                         LootBagEntities[lootbagnetid].Items[k].amount = v.amount
@@ -769,21 +769,21 @@ AddEventHandler('vRP:InComa', function()
     end)
 end)
 
-RegisterNetEvent('vRP:LootBag')
-AddEventHandler('vRP:LootBag', function(netid)
+RegisterNetEvent('HVC:LootBag')
+AddEventHandler('HVC:LootBag', function(netid)
     local source = source
-    vRPclient.isInComa(source, {}, function(in_coma) 
+    HVCclient.isInComa(source, {}, function(in_coma) 
         if not in_coma then
             if LootBagEntities[netid] then
                 LootBagEntities[netid][3] = true;
-                local user_id = vRP.getUserId({source})
+                local user_id = HVC.getUserId({source})
                 if user_id ~= nil then
-                    TriggerClientEvent("vrp:PlaySound", source, "zipper")
+                    TriggerClientEvent("HVC:PlaySound", source, "zipper")
                     LootBagEntities[netid][5] = source
 
-                    if vRP.hasPermission({user_id, "pd.armory"}) then
-                        vRP.clearInventory({LootBagEntities[netid].id})
-                        vRPclient.notify(source,{"~d~You have seized " .. LootBagEntities[netid].name .. "'s items"})
+                    if HVC.hasPermission({user_id, "pd.armory"}) then
+                        HVC.clearInventory({LootBagEntities[netid].id})
+                        HVCclient.notify(source,{"~d~You have seized " .. LootBagEntities[netid].name .. "'s items"})
 
                         OpenInv(source, netid, LootBagEntities[netid].Items)
                     else
@@ -791,10 +791,10 @@ AddEventHandler('vRP:LootBag', function(netid)
                     end  
                 end
             else
-                vRPclient.notify(source, {'~d~This loot bag is unavailable.'})
+                HVCclient.notify(source, {'~d~This loot bag is unavailable.'})
             end
         else 
-            vRPclient.notify(source, {'~d~You cannot open this while dead silly.'})
+            HVCclient.notify(source, {'~d~You cannot open this while dead silly.'})
         end
     end)
 end)
@@ -835,14 +835,14 @@ function CloseInv(source)
 end
 
 function OpenInv(source, netid, LootBagItems)
-    local UserId = vRP.getUserId({source})
-    local data = vRP.getUserDataTable({UserId})
+    local UserId = HVC.getUserId({source})
+    local data = HVC.getUserDataTable({UserId})
     if data and data.inventory then
         local FormattedInventoryData = {}
         for i,v in pairs(data.inventory) do
-            FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+            FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
         end
-        TriggerClientEvent('AQUARP:FetchPersonalInventory', source, FormattedInventoryData, vRP.computeItemsWeight({data.inventory}), vRP.getInventoryMaxWeight({UserId}))
+        TriggerClientEvent('AQUARP:FetchPersonalInventory', source, FormattedInventoryData, HVC.computeItemsWeight({data.inventory}), HVC.getInventoryMaxWeight({UserId}))
         InventorySpamTrack[source] = false;
     else 
         -- print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
@@ -850,7 +850,7 @@ function OpenInv(source, netid, LootBagItems)
     TriggerClientEvent('AQUARP:InventoryOpen', source, true, true)
     local FormattedInventoryData = {}
 
-    if vRP.hasPermission({UserId, "pd.armory"}) then
+    if HVC.hasPermission({UserId, "pd.armory"}) then
         for i,v in pairs(LootBagEntities) do 
             if DoesEntityExist(v[1]) then 
                 DeleteEntity(v[1])
@@ -860,12 +860,12 @@ function OpenInv(source, netid, LootBagItems)
         end
     else
         for i, v in pairs(LootBagItems) do
-            FormattedInventoryData[i] = {amount = v.amount, ItemName = vRP.getItemName({i}), Weight = vRP.getItemWeight({i})}
+            FormattedInventoryData[i] = {amount = v.amount, ItemName = HVC.getItemName({i}), Weight = HVC.getItemWeight({i})}
         end
         local maxVehKg = 200
-        TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, vRP.computeItemsWeight({LootBagItems}), maxVehKg)
+        TriggerClientEvent('AQUARP:SendSecondaryInventoryData', source, FormattedInventoryData, HVC.computeItemsWeight({LootBagItems}), maxVehKg)
 
-        vRPclient.notify(source,{"~g~You have opened " .. LootBagEntities[netid].name .. "'s lootbag"})
+        HVCclient.notify(source,{"~g~You have opened " .. LootBagEntities[netid].name .. "'s lootbag"})
     end
     -- print(json.encode(FormattedInventoryData))
 end

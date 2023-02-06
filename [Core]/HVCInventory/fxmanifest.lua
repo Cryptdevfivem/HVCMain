@@ -2,8 +2,8 @@ fx_version 'cerulean'
 games { 'gta5' }
 author 'JamesUK'
 client_scripts {
-    '@vrp/client/Tunnel.lua',
-    '@vrp/client/Proxy.lua',
+    '@HVC/client/Tunnel.lua',
+    '@HVC/client/Proxy.lua',
     'client.lua'
 }
 

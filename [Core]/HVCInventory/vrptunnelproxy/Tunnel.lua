@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ]]
 
----- TUNNEL CLIENT SIDE VERSION (https://github.com/ImagicTheCat/vRP)
+---- TUNNEL CLIENT SIDE VERSION (https://github.com/ImagicTheCat/HVC)
 -- Too bad that require doesn't exist client-side
 -- TOOLS DEF
 Tools = {}

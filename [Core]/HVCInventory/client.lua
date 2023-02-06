@@ -1,5 +1,5 @@
 -- A JamesUK Production. Licensed users only. Use without authorisation is illegal, and a criminal offence under UK Law.
-vRP = Proxy.getInterface("vRP")
+HVC = Proxy.getInterface("HVC")
 
 local inventoryOpen = false; 
 local debug = false;
@@ -14,12 +14,12 @@ local LootBagIDNew = nil;
 local LootBagCoords = nil;
 PlayerInComa = false;
 local model = GetHashKey('xm_prop_x17_bag_med_01a')
-tvRP = Proxy.getInterface("vRP")
+tHVC = Proxy.getInterface("HVC")
 
 RegisterNetEvent('openBoot')
 AddEventHandler('openBoot', function()
-    local nearestVeh = vRP.getNearestVehicle({3})
-    local VehInRadius, VehType, NVeh = tvRP.getNearestOwnedVehicle({3.5})
+    local nearestVeh = HVC.getNearestVehicle({3})
+    local VehInRadius, VehType, NVeh = tHVC.getNearestOwnedVehicle({3.5})
     if VehInRadius and IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then 
         ExecuteCommand('inventory')
         BootCar = GetEntityCoords(PlayerPedId())
@@ -35,7 +35,7 @@ end)
 
 local LootBagCrouchLoop = false;
 RegisterCommand('inventory', function()
-    if not tvRP.isInComa({}) then
+    if not tHVC.isInComa({}) then
         if not inventoryOpen then
             TriggerServerEvent('AQUARP:FetchPersonalInventory')
             inventoryOpen = true; 
@@ -66,7 +66,7 @@ RegisterCommand('inventory', function()
             end
         end
     else 
-        tvRP.notify({'~d~You cannot open your inventory while dead.'})
+        tHVC.notify({'~d~You cannot open your inventory while dead.'})
     end
 end)
 
@@ -111,7 +111,7 @@ AddEventHandler('AQUARP:InventoryOpen', function(toggle, lootbag)
         SendNUIMessage({action = 'InventoryDisplay', showInv = false})
     end
     if IsLootBagOpening then
-        TriggerEvent("vrp:PlaySound", "zipper")
+        TriggerEvent("HVC:PlaySound", "zipper")
         LoadAnimDict('amb@medic@standing@kneel@base')
         LoadAnimDict('anim@gangops@facility@servers@bodysearch@')
         TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false)
@@ -206,7 +206,7 @@ end)
 
 RegisterNUICallback('MoveAllBtn', function(data, cb)
     if not IsLootBagOpening then
-        local nearestVeh2 = vRP.getNearestVehicle({3})
+        local nearestVeh2 = HVC.getNearestVehicle({3})
         if inventoryType == 'CarBoot' then
             TriggerServerEvent('AQUARP:MoveItemAll', data.invType, data.itemId, VehTypeA, NetworkGetNetworkIdFromEntity(nearestVeh2)) -- for vehicle
         elseif inventoryType == "Housing" then
@@ -273,7 +273,7 @@ Citizen.CreateThread(function()
             end
         end
         if inventoryOpen then
-            if tvRP.isInComa({}) then
+            if tHVC.isInComa({}) then
                 inventoryOpen = false;
                 SetNuiFocus(false, false)
                 SetNuiFocusKeepInput(false)
@@ -297,7 +297,7 @@ RegisterKeyMapping('inventory', 'Opens / Closes your inventory', 'keyboard', 'L'
 -- LOOT BAG CODE BELOW 
 
 
-AddEventHandler('vRP:IsInComa', function(coma)
+AddEventHandler('HVC:IsInComa', function(coma)
     PlayerInComa = coma;
     if coma then 
         LootBagCoords = false;
@@ -352,7 +352,7 @@ Citizen.CreateThread(function()
             if NearMoneyBag then
                 if IsControlJustPressed(0, 38) then
                     if not IsPedSittingInAnyVehicle(Ped) then
-                        TriggerServerEvent('vRP:Moneydrop', NearestMoneyNetID)
+                        TriggerServerEvent('HVC:Moneydrop', NearestMoneyNetID)
                     else
                         Notify("~d~You cannot be in a vehicle!")
                     end
@@ -369,7 +369,7 @@ Citizen.CreateThread(function()
             if IsControlJustPressed(0, 38) then
                 if not IsPedSittingInAnyVehicle(PlayerPedId()) then
                     LoadAnimDict('amb@medic@standing@kneel@base')
-                    TriggerServerEvent('vRP:LootBag', LootBagIDNew)
+                    TriggerServerEvent('HVC:LootBag', LootBagIDNew)
                 else
                     Notify("~d~Error: ~w~You cannot be in a car!")
                 end
@@ -432,7 +432,7 @@ function RotationToDirection(rotation)
 end
 
 function getNearestVehicle(radius)
-    local x,y,z = vRP.getPosition()
+    local x,y,z = HVC.getPosition()
     local ped =PlayerPedId()
     if IsPedSittingInAnyVehicle(ped) then
       return GetVehiclePedIsIn(ped, true)
@@ -456,7 +456,7 @@ end)
 RegisterNetEvent('AQUARP:whatIsThis')
 AddEventHandler('AQUARP:whatIsThis', function()
       local chance = math.random(1,3)
-      local nearestVeh = vRP.getNearestVehicle({3})
+      local nearestVeh = HVC.getNearestVehicle({3})
         hasDoneIt = false
                RequestAnimDict('anim@amb@clubhouse@tutorial@bkr_tut_ig3@')
                while not HasAnimDictLoaded('anim@amb@clubhouse@tutorial@bkr_tut_ig3@') do
@@ -559,9 +559,9 @@ AddEventHandler('AQUARP:whatIsThis', function()
                        VehTypeC = nearestVeh
                        inventoryType = 'CarBoot'
                        TriggerServerEvent('AQUARP:FetchTrunkInventory', GetEntityArchetypeName(nearestVeh), NetworkGetNetworkIdFromEntity(nearestVeh))                   
-                   vRP.notify({"~g~You were succesful in picking this car."})
+                   HVC.notify({"~g~You were succesful in picking this car."})
                else
-                   vRP.notify({"~d~You were unsuccesful in picking this car."})
+                   HVC.notify({"~d~You were unsuccesful in picking this car."})
                 end
        local nearestVeh = nil
 end)
