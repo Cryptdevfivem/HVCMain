@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ]]
 
--- PROXY CLIENT-SIDE VERSION (https://github.com/ImagicTheCat/vRP)
+-- PROXY CLIENT-SIDE VERSION (https://github.com/ImagicTheCat/HVC)
 -- Proxy interface system, used to add/call functions between resources
 Proxy = {}
 
