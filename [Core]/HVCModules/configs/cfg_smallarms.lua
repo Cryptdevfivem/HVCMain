@@ -1,5 +1,5 @@
 cfgsmall = {}
-cfgsmall.blip = false
+cfgsmall.blip = true
 cfgsmall.perm = "player.phone" -- player.phone is default for everyone
 cfgsmall.currency = "£"
 

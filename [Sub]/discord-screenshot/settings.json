@@ -1,6 +1,6 @@
 {
-    "webhookUrl": "your_webhook_here",
-    "framework": "none",
+    "webhookUrl": "https://discord.com/api/webhooks/1072309131291136050/0aHgLlyt2D8791_Ug3HFcMP62p5lLtSN8lGeeSWqEG_Z0IC3Nw2dYqhn21-F9L5wQtto",
+    "framework": "hvc",
     "commandName": "screenshot",
     "commandPermission": "request.screenshot",
     "hiddenIdentifiers": [],

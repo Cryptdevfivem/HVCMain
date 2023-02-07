@@ -1,5 +1,5 @@
 cfglicense = {}
-cfglicense.blip = false
+cfglicense.blip = true
 cfglicense.currency = "£"
 
 -- This is very important. The gunshops must go in order!

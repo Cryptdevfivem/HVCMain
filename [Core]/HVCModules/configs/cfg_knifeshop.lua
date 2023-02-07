@@ -1,5 +1,5 @@
 cfgknife = {}
-cfgknife.blip = false
+cfgknife.blip = true
 cfgknife.perm = "player.phone" -- player.phone is default for everyone
 cfgknife.currency = "£"
 

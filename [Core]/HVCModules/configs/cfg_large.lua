@@ -1,5 +1,5 @@
 cfglarge = {}
-cfglarge.blip = false
+cfglarge.blip = true
 cfglarge.perm = "large.license" -- player.phone is default for everyone
 cfglarge.currency = "£"
 

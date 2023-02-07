@@ -4,7 +4,7 @@ fx_version "cerulean"
 game "gta5"
 version "1.0.0"
 
-shared_script "cfg/cfg_garages.lua"
+shared_script "cfg/garages.lua"
 shared_script "cfg/cfg_inventory.lua"
 client_script 'cfg/cl_greenzones.lua'
 client_scripts {
