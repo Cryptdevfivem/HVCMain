@@ -290,6 +290,7 @@ AddEventHandler('HVC:StoreWeaponsRequest', function(source)
         if not isStoring[player] then
             isStoring[player] = true
             HVCclient.giveWeapons(player,{{},true}, function(removedwep)
+                print(weapons)
                 for k,v in pairs(weapons) do
                     HVC.giveInventoryItem(user_id, "wbody|"..k, 1, true)
                     if v.ammo > 0 then
