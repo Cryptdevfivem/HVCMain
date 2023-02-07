@@ -304,11 +304,6 @@ AddEventHandler('HVC:StoreWeaponsRequest', function(source)
         end
 	end)
 end)
-    else
-            HVCclient.notify(player,{"~o~Your weapons are already being stored!"})
-        end
-    end
-end
 
 --[[
 function tHVC.updateTimePlayed()
