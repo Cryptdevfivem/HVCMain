@@ -286,13 +286,13 @@ end)
 AddEventHandler('HVC:StoreWeaponsRequest', function(source)
     local player = source 
     local user_id = HVC.getUserId(player)
-    HVCclient.getWeapons(player,{},function(weapons)
+	HVCclient.getWeapons(player,{},function(weapons)
         if not isStoring[player] then
             isStoring[player] = true
             HVCclient.giveWeapons(player, {{}, true}, function(removedwep)
                 for k,v in pairs(weapons) do
                     if v.ammo > 0 then
-                        --vRP.giveInventoryItem(user_id, "wammo|"..k, v.ammo, true)
+                        --HVC.giveInventoryItem(user_id, "wammo|"..k, v.ammo, true)
                         HVC.giveInventoryItem(user_id, "wbody|"..k, 1, true)
                     end
                 end
