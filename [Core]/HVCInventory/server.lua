@@ -1180,7 +1180,7 @@ AddEventHandler('HVC:InComa', function()
     local source = source
     HVCclient.isInComa(source, {}, function(in_coma) 
         if in_coma then
-            TriggerEvent('HVC:StoreWeaponsRequest', source)
+            TriggerEvent('HVC:StoreWeapons', source)
             Wait(350)
             local user_id = HVC.getUserId({source})
             local model = GetHashKey('xs_prop_arena_bag_01')
