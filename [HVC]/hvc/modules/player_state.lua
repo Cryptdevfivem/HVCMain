@@ -286,23 +286,38 @@ end)
 AddEventHandler('HVC:StoreWeaponsRequest', function(source)
     local player = source 
     local user_id = HVC.getUserId(player)
-	HVCclient.getWeapons(player,{},function(weapons)
+    HVCclient.getWeapons(player,{},function(weapons)
         if not isStoring[player] then
             isStoring[player] = true
-            HVCclient.giveWeapons(player, {{}, true}, function(removedwep)
+            HVCclient.giveWeapons(player,{{},true}, function(removedwep)
                 for k,v in pairs(weapons) do
+                    HVC.giveInventoryItem(user_id, "wbody|"..k, 1, true)
                     if v.ammo > 0 then
-                        --HVC.giveInventoryItem(user_id, "wammo|"..k, v.ammo, true)
-                        HVC.giveInventoryItem(user_id, "wbody|"..k, 1, true)
+                        local amm = v.ammo
+                        for i,v in pairs(HVCAmmoTypes) do
+                            for a,d in pairs(v) do
+                                if d == k then  
+                                    print(i)
+                                    HVC.giveInventoryItem(user_id, i, amm, true)
+                                end
+                            end   
+                        end
                     end
                 end
-                HVCclient.notify(player,{"~g~Weapons Stored"})
-                SetTimeout(10000,function()
+                HVCclient.notify(player,{"~g~Weapons stored!"})
+                SetTimeout(5000,function()
                     isStoring[player] = nil 
                 end)
             end)
+<<<<<<< HEAD
         end
 	end)
+=======
+        else
+            HVCclient.notify(player,{"~o~Your weapons are already being stored!"})
+        end
+    end)
+>>>>>>> parent of f178c5c (TEST)
 end)
 
 --[[
