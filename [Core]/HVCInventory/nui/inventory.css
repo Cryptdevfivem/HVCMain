@@ -10,7 +10,7 @@ body {
     position: fixed;
     top: 50%;
     left: 50%;
-    border: solid 0.1em #00aaff;
+    border: solid 0.1em #ff0000;
     border-radius: 10px;
     transform: translate(-50%, -50%);
 }
@@ -65,7 +65,7 @@ body {
     margin-left: 0.8em;
     margin-bottom: 0.6em;
     background-color: #101010e6;
-    border: solid 0.1em #00aaff;
+    border: solid 0.1em #ff0000;
     text-align: center;
     justify-content: center;
 }
@@ -75,14 +75,14 @@ body {
     position: relative;
     font-size: 25px;
     top: 3%;
-    color: #00aaff;
+    color: #ff0000;
     display: flex;
     align-items: center;
     justify-content: center
 }
 
 #ButtonRow1>div:hover {
-    background-color: #00aaff;
+    background-color: #ff0000;
 }
 
 #ButtonRow1>div>span {
@@ -96,7 +96,7 @@ body {
 
 #InventoryLine {
     width: 91%;
-    background: #00aaff;
+    background: #ff0000;
     height: 0.09em;
     position: relative;
     left: 3em;
@@ -105,7 +105,7 @@ body {
 
 #InventoryText {
     font-family: 'Poppins', sans-serif;
-    color: #00aaff;
+    color: #ff0000;
     position: relative;
     font-size: 0.8em;
     bottom: 32em;
@@ -152,7 +152,7 @@ th {
 
 th {
     padding: 0.4em;
-    color: #00aaff;
+    color: #ff0000;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -172,12 +172,12 @@ th {
 
 .ItemSelected {
     border: none;
-    background-color: #00aaff;
+    background-color: #ff0000;
 }
 
 #ndInventoryText {
     position: fixed;
-    color: #00aaff;
+    color: #ff0000;
     font-family: 'Poppins', sans-serif;
     font-size: 1.2em;
     opacity: 0.6;
