@@ -140,7 +140,7 @@ local TeleportLocationFind = {
     {"Garage (Paleto)", vector3(37.55, 6601.18, 32.47)},
     {"Garage (St.Thomas)", vector3(409.02, -636.59, 28.5)},
 
-    {"NHS (City)", vector3(37.55, 6601.18, 32.47)},
+    {"NHS (City)", vector3(296.7297, -584.0176, 43.13037)},
     {"NHS (Sandy)", vector3(1851.59, 3672.88, 33.74)},
     {"NHS (Paleto)", vector3(-254.4, 6347.62, 32.43)},
 }
