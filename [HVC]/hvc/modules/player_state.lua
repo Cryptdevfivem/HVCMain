@@ -291,8 +291,8 @@ AddEventHandler('HVC:StoreWeaponsRequest', function(source)
             isStoring[player] = true
             HVCclient.giveWeapons(player,{{},true}, function(removedwep)
                 for k,v in pairs(weapons) do
-                    HVC.giveInventoryItem(user_id, "wbody|"..k, 1, true)
                     if v.ammo > 0 then
+                        HVC.giveInventoryItem(user_id, "wbody|"..k, 1, true)
                         local amm = v.ammo
                         for i,v in pairs(HVCAmmoTypes) do
                             for a,d in pairs(v) do
@@ -309,15 +309,8 @@ AddEventHandler('HVC:StoreWeaponsRequest', function(source)
                     isStoring[player] = nil 
                 end)
             end)
-<<<<<<< HEAD
         end
 	end)
-=======
-        else
-            HVCclient.notify(player,{"~o~Your weapons are already being stored!"})
-        end
-    end)
->>>>>>> parent of f178c5c (TEST)
 end)
 
 --[[
