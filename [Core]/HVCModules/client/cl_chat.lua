@@ -13,6 +13,10 @@ local ProhibbitedWords = {
 	"nigger",
     "faggot",
     "c00n",
+    "arma",
+    "discord.gg/"
+    "cnr",
+    "armarp"
     "w0g",
 }
 
