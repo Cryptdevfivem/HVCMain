@@ -85,7 +85,7 @@ function addmoney(_, args)
             end
             PerformHttpRequest(logs, function(err, text, headers) end, 'POST', json.encode({username = "HVC Tebex Logs", embeds = command}), { ['Content-Type'] = 'application/json'})
         else
-            exports["ghmattimysql"]:execute("SELECT bank FROM hvc_user_moneys WHERE user_id = @user_id", {user_id = permid}, function(Result)
+            exports["ghmattimysql"]:execute("SELECT bank FROM hvc_user_moneys WHERE user_id = @user_id", {user_id = permid}, function(Result))
                 local Bank = Result
                 if packagename == "£1,000,000 Money Bag" then
                     HVC.giveBankMoney({HVC.getUserId({ids}), 1000000})
