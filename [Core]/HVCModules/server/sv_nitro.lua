@@ -10,8 +10,8 @@ RegisterServerEvent("CheckNitro")
 AddEventHandler("CheckNitro", function()
     local source = source
     local Ped = GetPlayerPed(source)
-    local discord = ""
-    local id = ""
+    local discord = "https://discord.gg/hvc5m"
+    local id = "1071225849455579206"
     local Health = GetEntityHealth(Ped)
     local Vehicle = GetVehiclePedIsIn(Ped, false)
     if Cooldown[source] and not (os.time() > Cooldown[source]) then
