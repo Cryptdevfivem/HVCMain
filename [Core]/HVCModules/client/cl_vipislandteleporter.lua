@@ -5,9 +5,9 @@ Citizen.CreateThread(function()
             DrawMarker(25, -2173.793, 5144.255, 2.808838 - 0.999999, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 2.5, 255, 0, 0, 150, 0, 0, 2, 0, 0, 0, false)
         end
         if isInArea(vector3(-2173.793, 5144.255, 2.808838), 0.9) then
-            alert('Press ~INPUT_VEH_HORN~ to teleport to legion')
+            alert('Press ~INPUT_VEH_HORN~ to teleport to polito lodges')
             if IsControlJustPressed(0, 51) then
-                TriggerServerEvent("HVC:VIPIslandTeleport", vector3(173.1297, -1079.103, 29.19556))
+                TriggerServerEvent("HVC:VIPIslandTeleport", vector3(-746.967, 5807.38, 17.60291))
             end
         end
     end
