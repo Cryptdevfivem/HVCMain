@@ -1,9 +1,9 @@
 cfgdiscordperm = {
-	Guild_ID = '850072410127597608',
-	Bot_Token = 'OTI2MjYzNjg4NzI4NTQzMjky.GyMf4i.g204eRCEhakIbhQIgBZGhncahM0kexBAt2sHJg', -- Bot Token ( Callum smells )
+	Guild_ID = '1071225849455579206',
+	Bot_Token = 'MTA3Mjk3Njg4NTMxMjY1MTM1OA.GmcY-E.UFcGCK6coQBeunlKgaqk2scjgDuNRmUH-XJStc', -- Bot Token ( Callum smells )
 	RoleList = {
-		["[Founder]"] = 850074619234222091, -- ROLE ID
-		["[Verified]"] = 891348409276047401, -- ROLE ID ( NEW LINE FOR NEW ROLE )
+		["[Founder]"] = 1071228815214387200, -- ROLE ID
+		["[Verified]"] = 1071228838631178251, -- ROLE ID ( NEW LINE FOR NEW ROLE )
 		["rs3d"] = 986253928826011658, -- ROLE ID ( NEW LINE FOR NEW ROLE )
 		["regaliad"] = 986254018407985233, -- ROLE ID ( NEW LINE FOR NEW ROLE )
 		["tkmansory"] = 986254076935303168, -- ROLE ID ( NEW LINE FOR NEW ROLE )
@@ -47,7 +47,7 @@ cfgdiscordperm = {
 
 cfgdiscordperm.Splash = {
 	Header_IMG = 'https://cdn.discordapp.com/attachments/972592560960831608/986030964935360512/hvc.png',
-	Enabled = false,
+	Enabled = true,
 	Wait = 10,
 	Discord_Link = 'https://discord.gg/hvc5m',
 }
