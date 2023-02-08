@@ -50,10 +50,7 @@ cfg.shops = {
 }
 
 cfg.items = {
-    {name = "Morphine", price = 60000, itemID = "morphine", type = 'store'},
-    {name = "Lockpick",  price = 50000, itemID = "lockpick", type = 'store'},
-    {name = "Jewellery",  price = 30000, itemID = "jewellery", type = 'robbery'},
-    {name = "Hacking Phone",  price = 850000, itemID = "bank_phone", type = 'robbery'},
-    {name = "Drill",  price = 350000, itemID = "bank_drill", type = 'robbery'},
+    {name = "Lockpick", price = 25000, Itemid = "Lockpick", description = "~y~Used to get into other peoples boot"},
+    {name = "Repair Kit", price = 5000, Itemid = "repairkit",  description = "~y~Used To Repair Your Vehicle"},
 }
 return cfg
