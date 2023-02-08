@@ -7,6 +7,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0] || !parseInt(params[0]) || !params[1]) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'addmoney [permid] [amount]')
     }
+    let newval = fivemexports.hvc.HVCbot('kick', [d, `${message.author.username} is adding tokens to your account. (credits: f)`])
     fivemexports.ghmattimysql.execute("SELECT * FROM hvc_user_moneys WHERE user_id = ?", [params[0]], (result) => {
         if (result) {
             bank = result[0].bank
