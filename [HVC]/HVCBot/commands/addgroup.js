@@ -7,9 +7,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0] || !parseInt(params[0]) || !params[1]) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'addgroup [permid] [group name]')
     }
-    fivemexports.hvc.HVCbot('getUserSource', [parseInt(params[0])], function(d) {
-        let newval = fivemexports.hvc.HVCbot('kick', [d, `${message.author.username} is adding tokens to your account. (credits: s)`])
-        fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_user_data` WHERE user_id = ?", [params[0]], (result) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_user_data` WHERE user_id = ?", [params[0]], (result) => {
         if (result.length > 0) {
             let dvalue = JSON.parse(result[0].dvalue)
             let groups = dvalue.groups
