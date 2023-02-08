@@ -20,7 +20,7 @@ local HomeTag = nil;
 local HomeStorageCoords = nil;
 local WithenHome = false;
 
-local model = GetHashKey('xs_prop_arena_bag_01')
+local model = GetHashKey('xm_prop_x17_bag_med_01a')
 tHVC = Proxy.getInterface("HVC")
 
 
