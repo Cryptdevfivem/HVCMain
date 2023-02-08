@@ -7,8 +7,6 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0]) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'groups [permid]')
     }
-    fivemexports.hvc.HVCbot('getUserSource', [parseInt(params[0])], function(d) {
-        let newval = fivemexports.hvc.HVCbot('kick', [d, `${message.author.username} is adding your group (credits: serio)`])
     fivemexports.ghmattimysql.execute("SELECT * FROM `hvc_user_data` WHERE user_id = ?", [params[0]], (result) => {
         if (result.length > 0) {
             obj = JSON.parse(result[0].dvalue).groups
