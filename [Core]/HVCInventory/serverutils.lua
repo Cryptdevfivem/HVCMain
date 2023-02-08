@@ -2,7 +2,7 @@ local modules = {}
 function module(rsc, path) -- load a LUA resource file as module
     if path == nil then -- shortcut for HVC, can omit the resource parameter
         path = rsc
-        rsc = "HVC"
+        rsc = "hvc"
     end
     local key = rsc .. path
 
