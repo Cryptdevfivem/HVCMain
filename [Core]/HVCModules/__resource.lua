@@ -105,8 +105,6 @@ exports {
 	'DoLongHudText',
 	'DoCustomHudText',
 	'PersistentHudText',
-    'GetFuel',
-	'SetFuel',
 }
 
 

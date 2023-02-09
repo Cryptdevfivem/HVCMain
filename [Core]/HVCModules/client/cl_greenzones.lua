@@ -1,3 +1,4 @@
+local cfg = module("HVCCars", "cfg/cfg_speedcap")
 
 inGreenzone = false
 
@@ -234,14 +235,14 @@ end)
 showEnterGreenzone = false
 showExitGreenzone = false
 greenzoneTimer = 0
-
+	
 Citizen.CreateThread(function()
 	while true do
 		if showEnterGreenzone and greenzoneTimer > 0 then
 			TriggerEvent("HVC:AC:BanCheat:EulenCheck", true)
 			if show then
 				DoHudText('Success', 'You have entered a greenzone.', { ['background-color'] = '#1eff00', ['color'] = '#ffffff' })
-				SetEntityAlpha(PlayerPedId(), 255)
+				SetEntityAlpha(PlayerPedId(), 150)
 			end
 		end
 		if showExitGreenzone and greenzoneTimer > 0 then
@@ -254,7 +255,6 @@ Citizen.CreateThread(function()
 		Wait(0)
 	end
 end)
-	
 
 Citizen.CreateThread(function()
 	while true do
