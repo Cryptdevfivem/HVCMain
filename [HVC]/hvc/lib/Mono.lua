@@ -55,7 +55,7 @@ function Mono.loadAssembly(path)
   if assembly ~= nil then
     -- build assembly namespace
     local count = 0
-    foreach atype in assembly.GetTypes() do
+    for eachatype in assembly.GetTypes() do
       add_assembly_type(r,atype)
       count = count+1
     end
