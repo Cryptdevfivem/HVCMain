@@ -66,11 +66,18 @@ AddEventHandler("Pass-Alarm:Return:NewPanic", function(source, Officer)
 		end
 
 		-- Only people tuned to the panic channel can see the message
-		TriggerEvent("chat:addMessage", {
-			color = {255, 0, 0},
-			multiline = true,
-			args = {Config.Sender, Config.Message .. " - " .. Officer.Name .. " (" .. source .. ") - " .. Officer.Location}
-		})
+		RegisterNetEvent("HVC:DisplayImageNotify")
+		AddEventHandler("HVC:DisplayImageNotify", function(title, text)
+			ImageNotify(title, text)
+		end)
+		
+		function ImageNotify(title, text)
+			SetNotificationTextEntry("STRING")
+			AddTextComponentString(text)
+			SetNotificationBackgroundColor(140)
+			SetNotificationMessage("CHAR_WE", "hvcstaff", false, 1, title, "")
+			DrawNotification(false, true)
+		end
 
 		Citizen.CreateThread(function()
 			local Blip = AddBlipForRadius(Officer.Coords.x, Officer.Coords.y, Officer.Coords.z, 100.0)
