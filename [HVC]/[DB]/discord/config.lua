@@ -1,6 +1,6 @@
 cfgdiscordperm = {
 	Guild_ID = '1071225849455579206',
-	Bot_Token = 'MTA3Mjk3Njg4NTMxMjY1MTM1OA.GmcY-E.UFcGCK6coQBeunlKgaqk2scjgDuNRmUH-XJStc', -- Bot Token ( Callum smells )
+	Bot_Token = 'MTA3Mzc3NDg4MzE1MjA4MTAyNw.Gt5H6j.ZhcTPwf4tKkyVCNXg2BwX2C8ptLMqtOe_06ahA', -- Bot Token ( Crypt smells )
 	RoleList = {
 		["[Founder]"] = 1071228815214387200, -- ROLE ID
 		["[Verified]"] = 1071228838631178251, -- ROLE ID ( NEW LINE FOR NEW ROLE )
