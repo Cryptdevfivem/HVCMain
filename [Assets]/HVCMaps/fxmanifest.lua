@@ -4,70 +4,17 @@ game 'gta5'
 this_is_a_map 'yes'
 
 
-data_file 'TIMECYCLEMOD_FILE' 'gabz_timecycle_mods_1.xml'
-data_file 'TIMECYCLEMOD_FILE' 'nutt_timecycle_mods_1.xml'
-data_file 'INTERIOR_PROXY_ORDER_FILE' 'interiorproxies.meta'
-data_file 'DLC_ITYP_REQUEST' 'k4mb1_ornate_bank.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'stream/vg_wr3_props.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'stream/{kaezpier}/ffxv_galdinquay.ytyp'
-data_file "DLC_ITYP_REQUEST" "stream/{kaezranch}/tays_props_ytyp.ytyp"
-data_file 'DLC_ITYP_REQUEST' "stream/{maccys}/ub-maccys.ytyp"
-file 'v_int_19.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'v_int_19.ytyp'
+client_scripts {
+	"client.lua",
+    "cl_paleto.lua"
+}
 
-data_file "INTERIOR_PROXY_ORDER_FILE" "interiorproxies.meta"
+files {
+	"stream/**/*.ytyp",
+}
 
-files { "interiorproxies.meta" }
+data_file 'DLC_ITYP_REQUEST' 'stream/**/*.ytyp'
 
-file 'int_industrial'
-data_file 'DLC_ITYP_REQUEST' 'int_industrial.ytyp'
-
-file 'v_int_19.ycd'
-data_file 'DLC_ITYP_REQUEST' 'v_int_19.ycd'
-
-file 'ch_prop_ch_casino_main.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'ch_prop_ch_casino_main.ytyp'
-
-file 'vw_prop_vw_accs_01.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'vw_prop_vw_accs_01.ytyp'
-
-file 'int_corporate.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'int_corporate.ytyp'
-
-file 'ch_prop_ch_casino_backarea.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'ch_prop_ch_casino_backarea.ytyp'
-
-file 'vw_prop_vw_casino_art_03.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'vw_prop_vw_casino_art_03.ytyp'
-
-file 'vw_prop_vw_casino_art_04.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'vw_prop_vw_casino_art_04.ytyp'
-
-file 'int_medical.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'int_medical.ytyp'
-
-file 'abrisgaz.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'abrisgaz.ytyp'
-
-file 'lavagevl.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'lavagevl.ytyp'
-
-file 'vw_prop_vw_casino_art_03.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'vw_prop_vw_casino_art_03.ytyp'
-
-file 'vw_prop_vw_casino_art_01.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'vw_prop_vw_casino_art_01.ytyp'
-
-file 'int_corporate.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'int_corporate.ytyp'
-
-file 'vw_prop_vw_casino_art_02.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'vw_prop_vw_casino_art_02.ytyp'
-
-file 'vw_prop_vw_casino_art_02.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'vw_prop_vw_casino_art_02.ytyp'
-
-file "stream/{maccys}/ub-maccys.ytyp"
 
 client_script {
     'main.lua',
