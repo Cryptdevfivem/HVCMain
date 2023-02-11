@@ -650,7 +650,7 @@ Citizen.CreateThread(function()
             local v1 = vector3(x,y,z)
 
             if isInArea(v1, 100.0) then 
-                DrawMarker(25, v1.x,v1.y,v1.z - 0.94, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 2.5, 255, 0, 0, 150, 0, 0, 2, 0, 0, 0, false)
+                DrawMarker(25, v1.x,v1.y,v1.z - 0.888888, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 2.5, 255, 0, 0, 150, 0, 0, 2, 0, 0, 0, false)
             end
 
             if isInArea(v.Coords, 0.9) then

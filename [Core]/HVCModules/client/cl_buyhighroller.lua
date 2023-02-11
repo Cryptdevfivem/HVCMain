@@ -35,7 +35,7 @@ Citizen.CreateThread(function()
         for k, v in pairs(vftcfgcasino.coords) do
             local v1 = vector3(1088.35, 219.51, -49.2)
             if isInArea(v1, 100.0) then 
-                DrawMarker(25, v1.x,v1.y,v1.z - 0.999999, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 2.5, 255, 0, 0, 150, 0, 0, 2, 0, 0, 0, false)
+                DrawMarker(25, v1.x,v1.y,v1.z - 0.888888, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 2.5, 255, 0, 0, 150, 0, 0, 2, 0, 0, 0, false)
             end
             if isInhighrollerMenu == false then
             if isInArea(v1, 1.4) then 
