@@ -22,7 +22,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (params[0] == 'user') {
         let embed = {
             "title": "Bot Commands",
-            "description": `**Public Commands:** \n${process.env.PREFIX}hmc [spawncode] \n${process.env.PREFIX}co [spawncode] \n${process.env.PREFIX}status \n${process.env.PREFIX}ip \n${process.env.PREFIX}top10 \n${process.env.PREFIX}staffapp \n${process.env.PREFIX}carreport \n${process.env.PREFIX}pdcord \n${process.env.PREFIX}support \n${process.env.PREFIX}locklist \n${process.env.PREFIX}banappeal \n${process.env.PREFIX}nhs \n${process.env.PREFIX}pd` \n${process.env.PREFIX}devapp ,
+            "description": `**Public Commands:** \n${process.env.PREFIX}hmc [spawncode] \n${process.env.PREFIX}co [spawncode] \n${process.env.PREFIX}status \n${process.env.PREFIX}ip \n${process.env.PREFIX}top10 \n${process.env.PREFIX}staffapp \n${process.env.PREFIX}carreport \n${process.env.PREFIX}pdcord \n${process.env.PREFIX}support \n${process.env.PREFIX}locklist \n${process.env.PREFIX}banappeal \n${process.env.PREFIX}nhs \n${process.env.PREFIX}pd`,
             "color": settingsjson.settings.botColour,
             "footer": {
                 "text": ""
