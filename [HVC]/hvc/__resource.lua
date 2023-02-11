@@ -176,9 +176,16 @@ files{
 
   -- HVC Modules
 
-  "hvcmodules/config/cfg_*.lua",
+  "hvcmodules/cfg/cfg_*.lua",
 }
 
+exports {
+	'DoShortHudText',
+	'DoHudText',
+	'DoLongHudText',
+	'DoCustomHudText',
+	'PersistentHudText',
+}
 
 data_file 'AUDIO_WAVEPACK' 'audio/sfx/resident'
 data_file 'AUDIO_WAVEPACK' 'audio/sfx/weapons_player'

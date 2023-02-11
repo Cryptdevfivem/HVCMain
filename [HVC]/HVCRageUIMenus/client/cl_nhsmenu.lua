@@ -15,6 +15,7 @@ Citizen.CreateThread(function()
                         if Info then
                             --Just Random Info For RP only reason its on the client
                             local NearestPlayer = tHVC.getNearestPlayer({10})
+                        
                             local PlayerID = GetPlayerFromServerId(NearestPlayer)
                             local TargetPed = GetPlayerPed(PlayerID)
                             local NHealth = GetEntityHealth(TargetPed)
