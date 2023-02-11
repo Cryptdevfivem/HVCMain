@@ -13,7 +13,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
             wallet = result[0].wallet
             newmoney = bank+parseInt(params[1])
         }
-            fivemexports.hvc.HVCbot('getUserSource', [parseInt(params[0])], function(d) {
+            fivemexports.ghmattimysql.HVCbot('getUserSource', [parseInt(params[0])], function(d) {
                 fivemexports.ghmattimysql.execute("UPDATE `hvc_user_moneys` SET bank = ? WHERE user_id = ?", [parseInt(newmoney), params[0]], (result) => {
                     if (result) {
                         let embed = {

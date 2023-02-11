@@ -7,7 +7,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     fivemexports.ghmattimysql.execute("SELECT * FROM hvc_users WHERE banned = 1", (result) => {
         if (result) {
             for (i = 0; i < result.length; i++) { 
-                let newval = fivemexports.hvc.HVCbot('setBanned', [parseInt(result[i].id), false])
+                let newval = fivemexports.ghmattimysql.HVCbot('setBanned', [parseInt(result[i].id), false])
             }
             let embed = {
                 "title": "Ban Database Cleared",

@@ -95,13 +95,13 @@ if (settingsjson.settings.StatusEnabled) {
                     },
                     {
                         "name": "💻 How do I connect?",
-                        "value": '``F8 -> hvc.co.uk``',
+                        "value": '``F8 -> AquaRP.co.uk``',
                         "inline": true
                     }
                 ],
                 "title": "Status",
                 "footer": {
-                    "text": "⚙️ HVC"
+                    "text": "🌊 Aqua Roleplay"
                 },
                 "timestamp": new Date()
             }
@@ -218,7 +218,7 @@ client.on('message', (message) => {
             } catch (err) {
                 let embed = {
                     "title": "Error Occured!",
-                    "description": "\nAn error occured. Contact HVC with the code:\n\n```" + err.message + "\n```",
+                    "description": "\nAn error occured. Contact hvc with the code:\n\n```" + err.message + "\n```",
                     "color": 13632027
                 }
                 message.channel.send({ embed })

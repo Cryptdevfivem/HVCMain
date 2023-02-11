@@ -8,7 +8,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'unban [permid]')
     }
     const reason = params.slice(1).join(' ');
-    let newval = fivemexports.hvc.HVCbot('setBanned', [params[0], false])
+    let newval = fivemexports.ghmattimysql.HVCbot('setBanned', [params[0], false])
     let embed = {
         "title": "Unbanned User",
         "description": `\nPerm ID: **${params[0]}**\n\nAdmin: <@${message.author.id}>`,
