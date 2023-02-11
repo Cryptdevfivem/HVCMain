@@ -95,13 +95,13 @@ if (settingsjson.settings.StatusEnabled) {
                     },
                     {
                         "name": "💻 How do I connect?",
-                        "value": '``F8 -> AquaRP.co.uk``',
+                        "value": '``F8 -> hvc.co.uk``',
                         "inline": true
                     }
                 ],
                 "title": "Status",
                 "footer": {
-                    "text": "🌊 Aqua Roleplay"
+                    "text": "HVC"
                 },
                 "timestamp": new Date()
             }
